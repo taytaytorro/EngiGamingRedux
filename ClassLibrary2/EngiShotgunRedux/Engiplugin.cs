@@ -42,13 +42,10 @@ namespace EngiShotgu
 			SkillFamily skillFamily = component.primary.skillFamily;
 			SkillFamily skillFamily2 = component.secondary.skillFamily;
 			//SkillFamily skillFamily3 = component.special.skillFamily;
-
 			R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
 			var skillDef = ScriptableObject.CreateInstance<SkillDef>();
-			ContentAddition.AddSkillDef(skillDef);
-			Logger.LogMessage("activating1");
+
 			skillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
-			Logger.LogMessage("activating2");
 			skillDef.activationStateMachineName = "Weapon";
 			skillDef.baseMaxStock = 1;
 			skillDef.baseRechargeInterval = 0f;
@@ -67,6 +64,7 @@ namespace EngiShotgu
 			skillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>.";
 			skillDef.skillName = "EngiShotgun";
 			skillDef.skillNameToken = "Gauss Scatter";
+			ContentAddition.AddSkillDef(skillDef);
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;
 			int num = skillFamily.variants.Length - 1;
@@ -75,12 +73,11 @@ namespace EngiShotgu
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
 			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
 			variants[num] = variant;
+			
 			R2API.ContentAddition.AddEntityState<PlasmaGrenade>(out _);
-			ContentAddition.AddSkillDef(skillDef);
+
 			var skillDef2 = ScriptableObject.CreateInstance<SkillDef>();
-			Logger.LogMessage("activating3");
 			skillDef2.activationState = new SerializableEntityStateType(typeof(PlasmaGrenade));
-			Logger.LogMessage("activating4");
 			skillDef2.activationStateMachineName = "Weapon";
 			skillDef2.baseMaxStock = 2;
 			skillDef2.baseRechargeInterval = 8f;
@@ -109,6 +106,7 @@ namespace EngiShotgu
 			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
 			variants2[num2] = variant;
 			
+
 		}
 
 		// Token: 0x06000024 RID: 36 RVA: 0x00002DC6 File Offset: 0x00000FC6
