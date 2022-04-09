@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Resources;
 using System.Runtime.CompilerServices;
 
-namespace ClassLibrary2.Properties
+namespace ShotgunengiREDUX.Properties
 {
 	// Token: 0x02000002 RID: 2
 	[GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
@@ -29,7 +29,7 @@ namespace ClassLibrary2.Properties
 				bool flag = Resources.resourceMan == null;
 				if (flag)
 				{
-					ResourceManager resourceManager = new ResourceManager("ClassLibrary2.Properties.Resources", typeof(Resources).Assembly);
+					ResourceManager resourceManager = new ResourceManager("ShotgunengiREDUX.Properties.Resources", typeof(Resources).Assembly);
 					Resources.resourceMan = resourceManager;
 				}
 				return Resources.resourceMan;

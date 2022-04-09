@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BepInEx;
-using ClassLibrary2.Properties;
+using ShotgunengiREDUX.Properties;
 using EngiShotgun.Assets;
 using EntityStates;
 using EntityStates.Engi.EngiWeapon.Rux1;
@@ -52,7 +52,7 @@ namespace EngiShotgu
 			skillDef.beginSkillCooldownOnSkillEnd = true;
 			skillDef.canceledFromSprinting = false;
 			skillDef.fullRestockOnAssign = false;
-			skillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
+			skillDef.interruptPriority = EntityStates.InterruptPriority.Any;
 			skillDef.isCombatSkill = true;
 			skillDef.mustKeyPress = false;
 			skillDef.cancelSprintingOnActivation = true;
@@ -169,13 +169,13 @@ namespace EngiShotgu
 		}
 
 		// Token: 0x04000027 RID: 39
-		public static Texture2D gaussShotgunIcon = Assets.LoadTexture2D(ClassLibrary2.Properties.Resources.engishotgunicon);
+		public static Texture2D gaussShotgunIcon = Assets.LoadTexture2D(ShotgunengiREDUX.Properties.Resources.engishotgunicon);
 
 		// Token: 0x04000028 RID: 40
 		public static Sprite gaussShotgunIconS = Assets.TexToSprite(Engiplugin.gaussShotgunIcon);
 
 		// Token: 0x04000029 RID: 41
-		public static Texture2D plasmaGrenadeIcon = Assets.LoadTexture2D(ClassLibrary2.Properties.Resources.grenade1);
+		public static Texture2D plasmaGrenadeIcon = Assets.LoadTexture2D(ShotgunengiREDUX.Properties.Resources.grenade1);
 
 		// Token: 0x0400002A RID: 42
 		public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
