@@ -6,6 +6,7 @@ using EngiShotgun.Assets;
 using EntityStates;
 using EntityStates.Engi.EngiWeapon.Rux1;
 using EntityStates.Engi.EngiWeapon.Rux2;
+using EntityStates.Engi.EngiWeapon.Reload;
 using R2API;
 using R2API.Utils;
 using RoR2;
@@ -18,7 +19,7 @@ namespace EngiShotgu
 {
 	// Token: 0x02000007 RID: 7
 	[BepInDependency("com.bepis.r2api")]
-	[BepInPlugin("com.Ruxbieno.EngiShotgun", "EngiGamingREDUX", "1.0.0")]
+	[BepInPlugin("com.Ruxbieno.EngiShotgun", "EngiGamingREDUX", "1.0.1")]
 	[R2APISubmoduleDependency(new string[]
 	{
 		"PrefabAPI",
@@ -43,11 +44,10 @@ namespace EngiShotgu
 			SkillFamily skillFamily2 = component.secondary.skillFamily;
 			//SkillFamily skillFamily3 = component.special.skillFamily;
 			R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
-			var skillDef = ScriptableObject.CreateInstance<SkillDef>();
-
+			var skillDef = ScriptableObject.CreateInstance<ReloadSkillDef>();
 			skillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
 			skillDef.activationStateMachineName = "Weapon";
-			skillDef.baseMaxStock = 1;
+			skillDef.baseMaxStock = stock;
 			skillDef.baseRechargeInterval = 0f;
 			skillDef.beginSkillCooldownOnSkillEnd = true;
 			skillDef.canceledFromSprinting = false;
@@ -64,6 +64,9 @@ namespace EngiShotgu
 			skillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>.";
 			skillDef.skillName = "EngiShotgun";
 			skillDef.skillNameToken = "Gauss Scatter";
+			skillDef.reloadState = new SerializableEntityStateType(typeof(Reload));
+			skillDef.reloadInterruptPriority = InterruptPriority.Skill;
+			skillDef.graceDuration = 2f;
 			ContentAddition.AddSkillDef(skillDef);
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;
@@ -167,6 +170,11 @@ namespace EngiShotgu
 			this.PlasmaGrenadeGhostObject.AddComponent<NetworkBehaviour>();
 			ContentAddition.AddProjectile(Engiplugin.PlasmaGrenadeObject);
 		}
+		public InterruptPriority reloadInterruptPriority = InterruptPriority.Skill;
+		public float graceDuration;
+		public SerializableEntityStateType reloadState;
+
+		public int stock = 6;
 
 		// Token: 0x04000027 RID: 39
 		public static Texture2D gaussShotgunIcon = Assets.LoadTexture2D(ShotgunengiREDUX.Properties.Resources.engishotgunicon);

@@ -3,6 +3,9 @@ using EntityStates.EngiTurret.EngiTurretWeapon;
 using EntityStates.Mage.Weapon;
 using RoR2;
 using UnityEngine;
+using EntityStates.Engi.EngiWeapon.Reload;
+using ShotgunengiREDUX;
+using EngiShotgu;
 
 namespace EntityStates.Engi.EngiWeapon.Rux1
 {
@@ -14,8 +17,24 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 		{
 			base.OnEnter();
 			this.duration = 0.7f / attackSpeedStat;
+			float var = Reload.Reload.usedStock;
 			FireLaserbolt.Gauntlet gauntlet = this.gauntlet;
-			bool flag = gauntlet > 0;
+			if (Reload.Reload.usedStock % 2 == 0)
+			{
+				this.muzzleString = "MuzzleRight";
+				base.PlayAnimation("Gesture Right, Additive", "FireGrenadeRight", "FireGauntlet.playbackRate", this.duration);
+				Reload.Reload.usedStock++;
+				base.skillLocator.primary.DeductStock(1);
+			}
+			else
+			{
+				this.muzzleString = "MuzzleLeft";
+				base.PlayAnimation("Gesture Left, Additive", "FireGrenadeLeft", "FireGauntlet.playbackRate", this.duration);
+				Reload.Reload.usedStock++;
+				base.skillLocator.primary.DeductStock(1);
+			}
+			//firecount++;
+			/*bool flag = gauntlet > 0;
 			if (flag)
 			{
 				bool flag2 = gauntlet > 0;
@@ -29,7 +48,7 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			{
 				this.muzzleString = "MuzzleLeft";
 				base.PlayAnimation("Gesture Left, Additive", "FireGrenadeLeft", "FireGauntlet.playbackRate", this.duration);
-			}
+			}*/
 			base.PlayAnimation("Gesture, Additive", "HoldGauntletsUp", "FireGauntlet.playbackRate", this.duration);
 			Util.PlaySound(FireGauss.attackSoundString, base.gameObject);
 			this.animator = base.GetModelAnimator();
@@ -107,6 +126,7 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			if (flag)
 			{
 				this.FireGauntlet();
+				this.Deductstock();
 			}
 			bool flag2 = base.fixedAge < this.duration || !base.isAuthority;
 			if (!flag2)
@@ -132,12 +152,23 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 				}
 			}
 		}
+		private void Deductstock()
+		{
+			if (this.hasremovedstock)
+			{
+				return;
+			}
+			base.skillLocator.primary.DeductStock(1);
+			this.hasremovedstock = true;
+
+		}
 
 		// Token: 0x06000020 RID: 32 RVA: 0x00002AAC File Offset: 0x00000CAC
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
 			return InterruptPriority.Skill;
 		}
+
 
 		// Token: 0x04000019 RID: 25
 		public static GameObject muzzleEffectPrefab;
@@ -190,5 +221,6 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			// Token: 0x04000032 RID: 50
 			Right
 		}
+		private bool hasremovedstock;
 	}
 }
