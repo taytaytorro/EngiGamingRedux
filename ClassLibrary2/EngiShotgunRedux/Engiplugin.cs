@@ -48,7 +48,7 @@ namespace EngiShotgu
 			skillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
 			skillDef.activationStateMachineName = "Weapon";
 			skillDef.baseMaxStock = stock;
-			skillDef.baseRechargeInterval = 0f;
+			skillDef.baseRechargeInterval = .75f;
 			skillDef.beginSkillCooldownOnSkillEnd = true;
 			skillDef.canceledFromSprinting = false;
 			skillDef.fullRestockOnAssign = false;
@@ -60,13 +60,14 @@ namespace EngiShotgu
 			skillDef.rechargeStock = 1;
 			skillDef.requiredStock = 1;
 			skillDef.stockToConsume = 1;
+			skillDef.resetCooldownTimerOnUse = true;
 			skillDef.icon = Engiplugin.gaussShotgunIconS;
-			skillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>.";
+			skillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 6 total rounds.";
 			skillDef.skillName = "EngiShotgun";
 			skillDef.skillNameToken = "Gauss Scatter";
 			skillDef.reloadState = new SerializableEntityStateType(typeof(Reload));
 			skillDef.reloadInterruptPriority = InterruptPriority.Skill;
-			skillDef.graceDuration = 2f;
+			skillDef.graceDuration = .75f;
 			ContentAddition.AddSkillDef(skillDef);
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;

@@ -21,18 +21,19 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			FireLaserbolt.Gauntlet gauntlet = this.gauntlet;
 			if (Reload.Reload.usedStock % 2 == 0)
 			{
+				Reload.Reload.usedStock++;
 				this.muzzleString = "MuzzleRight";
 				base.PlayAnimation("Gesture Right, Additive", "FireGrenadeRight", "FireGauntlet.playbackRate", this.duration);
-				Reload.Reload.usedStock++;
-				base.skillLocator.primary.DeductStock(1);
+				//base.skillLocator.primary.DeductStock(1);
 			}
 			else
 			{
+				Reload.Reload.usedStock++;
 				this.muzzleString = "MuzzleLeft";
 				base.PlayAnimation("Gesture Left, Additive", "FireGrenadeLeft", "FireGauntlet.playbackRate", this.duration);
-				Reload.Reload.usedStock++;
-				base.skillLocator.primary.DeductStock(1);
+				//base.skillLocator.primary.DeductStock(1);
 			}
+			base.skillLocator.primary.DeductStock(1);
 			//firecount++;
 			/*bool flag = gauntlet > 0;
 			if (flag)
@@ -126,7 +127,7 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			if (flag)
 			{
 				this.FireGauntlet();
-				this.Deductstock();
+				
 			}
 			bool flag2 = base.fixedAge < this.duration || !base.isAuthority;
 			if (!flag2)
@@ -151,8 +152,9 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 					this.outer.SetNextStateToMain();
 				}
 			}
+			
 		}
-		private void Deductstock()
+		/*private void Deductstock()
 		{
 			if (this.hasremovedstock)
 			{
@@ -161,12 +163,12 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			base.skillLocator.primary.DeductStock(1);
 			this.hasremovedstock = true;
 
-		}
+		}*/
 
 		// Token: 0x06000020 RID: 32 RVA: 0x00002AAC File Offset: 0x00000CAC
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
-			return InterruptPriority.Skill;
+			return InterruptPriority.PrioritySkill;
 		}
 
 
@@ -221,6 +223,6 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			// Token: 0x04000032 RID: 50
 			Right
 		}
-		private bool hasremovedstock;
+		//private bool hasremovedstock;
 	}
 }

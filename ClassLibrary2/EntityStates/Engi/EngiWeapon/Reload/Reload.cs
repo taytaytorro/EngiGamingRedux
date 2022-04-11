@@ -19,7 +19,7 @@ namespace EntityStates.Engi.EngiWeapon.Reload
 			set { UsedStock = value; }
 
 		}
-		private float Duration
+		/*private float Duration
 		{
 			get
 			{
@@ -40,7 +40,7 @@ namespace EntityStates.Engi.EngiWeapon.Reload
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (base.fixedAge >= this.Duration / 2f)
+			if (base.fixedAge >= this.Duration / .25f)
 			{
 				this.GiveStock();
 			}
@@ -79,7 +79,7 @@ namespace EntityStates.Engi.EngiWeapon.Reload
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
 			return InterruptPriority.Skill;
-		}
+		}*/
 
 
 
