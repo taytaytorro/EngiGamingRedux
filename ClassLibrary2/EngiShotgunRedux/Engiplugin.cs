@@ -59,7 +59,7 @@ namespace EngiShotgu
 			skillDef.forceSprintDuringState = false;
 			skillDef.rechargeStock = 1;
 			skillDef.requiredStock = 1;
-			skillDef.stockToConsume = 1;
+			skillDef.stockToConsume = 0;
 			skillDef.resetCooldownTimerOnUse = true;
 			skillDef.icon = Engiplugin.gaussShotgunIconS;
 			skillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 6 total rounds.";
