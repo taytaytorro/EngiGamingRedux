@@ -11,6 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="EngiShotgunRedux\Class1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="EngiShotgunRedux\VS_FileCompare.cmd" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\testing\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
