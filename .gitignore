@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ClassLibrary2/Properties
+/ClassLibrary2/EngiShotgunRedux/VS_FileCompare.cmd
+/ClassLibrary2/EngiShotgunRedux/Class1.cs
+/ClassLibrary2/EntityStates/Engi/EngiWeapon/Rux1/VS_FileCompare.cmd
+/ClassLibrary2/EntityStates/Engi/EngiWeapon/Rux1/Class1.cs

@@ -16,6 +16,7 @@ using UnityEngine.Networking;
 
 
 
+
 namespace EngiShotgu
 {
 	// Token: 0x02000007 RID: 7
@@ -44,8 +45,10 @@ namespace EngiShotgu
 		public Sprite plasmaGrenadeIconS;
 		private void LoadAssetBundle()
 		{
+			PInfo = Info;
 			if (assetBundle == null)
 			{
+
 				string dir = System.IO.Path.GetDirectoryName(Info.Location);
 				assetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(PInfo.Location, "..", "AssetBundleStaging", "icons"));
 				load = assetBundle;
@@ -73,83 +76,84 @@ namespace EngiShotgu
 		//public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
 		public void Awake()
 		{
+			
 
-			PInfo = Info;
+			LoadAssetBundle();
 			this.SetupProjectiles();
-			GameObject gameObject = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody");
-			SkillLocator component = gameObject.GetComponent<SkillLocator>();
+			SkillLocator component = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody").GetComponent<SkillLocator>();
 			SkillFamily skillFamily = component.primary.skillFamily;
 			SkillFamily skillFamily2 = component.secondary.skillFamily;
-			//SkillFamily skillFamily3 = component.special.skillFamily;
+
 			R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
-			var skillDef = ScriptableObject.CreateInstance<ReloadSkillDef>();
-			skillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
+			ReloadSkillDef reloadSkillDef = ScriptableObject.CreateInstance<ReloadSkillDef>();
+			reloadSkillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 8 total rounds.";
+			reloadSkillDef.skillName = "EngiShotgun";
+			reloadSkillDef.skillNameToken = "Gauss Scatter";
+			reloadSkillDef.icon = gaussShotgunIconS;
+			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
+			reloadSkillDef.activationStateMachineName = "Weapon";
+			reloadSkillDef.baseMaxStock = this.stock;
+			//	reloadSkillDef.baseRechargeInterval = GaussShotgun.duration + 0.05f;
+			reloadSkillDef.beginSkillCooldownOnSkillEnd = true;
+			reloadSkillDef.canceledFromSprinting = false;
+			reloadSkillDef.fullRestockOnAssign = true;
+			reloadSkillDef.interruptPriority = InterruptPriority.Any;
+			reloadSkillDef.resetCooldownTimerOnUse = true;
+			reloadSkillDef.mustKeyPress = false;
+			reloadSkillDef.isCombatSkill = true;
+			reloadSkillDef.cancelSprintingOnActivation = true;
+			reloadSkillDef.forceSprintDuringState = false;
+			reloadSkillDef.rechargeStock = 1;
+			reloadSkillDef.requiredStock = 1;
+			reloadSkillDef.stockToConsume = 1;
+			ContentAddition.AddSkillDef(reloadSkillDef);
+			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
+			SkillFamily.Variant[] variants = skillFamily.variants;
+			int num = skillFamily.variants.Length - 1;
+			SkillFamily.Variant variant = default(SkillFamily.Variant);
+			variant.skillDef = reloadSkillDef;
+			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
+			variants[num] = variant;
+
+
+			
+
+
+
+
+			R2API.ContentAddition.AddEntityState<PlasmaGrenade>(out _);
+			SkillDef skillDef = ScriptableObject.CreateInstance<SkillDef>();
+			skillDef.activationState = new SerializableEntityStateType(typeof(PlasmaGrenade));
 			skillDef.activationStateMachineName = "Weapon";
-			skillDef.baseMaxStock = stock;
-			skillDef.baseRechargeInterval = .75f;
+			skillDef.baseMaxStock = 2;
+			skillDef.baseRechargeInterval = 8f;
 			skillDef.beginSkillCooldownOnSkillEnd = true;
-			skillDef.canceledFromSprinting = false;
+			skillDef.canceledFromSprinting = true;
 			skillDef.fullRestockOnAssign = false;
-			skillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
+			skillDef.interruptPriority = InterruptPriority.Skill;
 			skillDef.isCombatSkill = true;
-			skillDef.mustKeyPress = false;
+			skillDef.mustKeyPress = true;
 			skillDef.cancelSprintingOnActivation = true;
 			skillDef.forceSprintDuringState = false;
 			skillDef.rechargeStock = 1;
 			skillDef.requiredStock = 1;
-			skillDef.stockToConsume = 0;
-			skillDef.resetCooldownTimerOnUse = true;
-			skillDef.icon = gaussShotgunIconS;
-			skillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 6 total rounds.";
-			skillDef.skillName = "EngiShotgun";
-			skillDef.skillNameToken = "Gauss Scatter";
-			skillDef.reloadState = new SerializableEntityStateType(typeof(Reload));
-			skillDef.reloadInterruptPriority = InterruptPriority.Any;
-			skillDef.graceDuration = .75f;
+			skillDef.stockToConsume = 1;
+			skillDef.icon = plasmaGrenadeIconS;
+			skillDef.skillDescriptionToken = "Take aim and lob a plasma grenade that deals <style=cIsDamage>600% damage</style> on impact and leaves a pool of plasma that deals <style=cIsDamage>30% damage per tick</style> and <style=cIsUtility>slows</style>. Can hold up to 2.";
+			skillDef.skillName = "PlasmaGrenade";
+			skillDef.skillNameToken = "Plasma Grenade";
 			ContentAddition.AddSkillDef(skillDef);
-			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
-			SkillFamily.Variant[] variants = skillFamily.variants;
-			int num = skillFamily.variants.Length - 1;
-			SkillFamily.Variant variant = default;
-			variant.skillDef = skillDef;
-			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
-			variants[num] = variant;
-
-			R2API.ContentAddition.AddEntityState<PlasmaGrenade>(out _);
-
-			var skillDef2 = ScriptableObject.CreateInstance<SkillDef>();
-			skillDef2.activationState = new SerializableEntityStateType(typeof(PlasmaGrenade));
-			skillDef2.activationStateMachineName = "Weapon";
-			skillDef2.baseMaxStock = 2;
-			skillDef2.baseRechargeInterval = 8f;
-			skillDef2.beginSkillCooldownOnSkillEnd = true;
-			skillDef2.canceledFromSprinting = true;
-			skillDef2.fullRestockOnAssign = false;
-			skillDef2.interruptPriority = EntityStates.InterruptPriority.Skill;
-			skillDef2.isCombatSkill = true;
-			skillDef2.mustKeyPress = true;
-			skillDef2.cancelSprintingOnActivation = true;
-			skillDef2.forceSprintDuringState = false;
-			skillDef2.rechargeStock = 1;
-			skillDef2.requiredStock = 1;
-			skillDef2.stockToConsume = 1;
-			skillDef2.icon = plasmaGrenadeIconS;
-			skillDef2.skillDescriptionToken = "Take aim and lob a plasma grenade that deals <style=cIsDamage>600% damage</style> on impact and leaves a pool of plasma that deals <style=cIsDamage>30% damage per tick</style> and <style=cIsUtility>slows</style>. Can hold up to 2.";
-			skillDef2.skillName = "PlasmaGrenade";
-			skillDef2.skillNameToken = "Plasma Grenade";
-			ContentAddition.AddSkillDef(skillDef2);
 			Array.Resize<SkillFamily.Variant>(ref skillFamily2.variants, skillFamily2.variants.Length + 1);
 			SkillFamily.Variant[] variants2 = skillFamily2.variants;
 			int num2 = skillFamily2.variants.Length - 1;
-			variant = default;
-			variant.skillDef = skillDef2;
+			variant = default(SkillFamily.Variant);
+			variant.skillDef = skillDef;
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
+			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
 			variants2[num2] = variant;
-
-
 		}
+
 
 		// Token: 0x06000024 RID: 36 RVA: 0x00002DC6 File Offset: 0x00000FC6
 		private void SetupProjectiles()
@@ -209,12 +213,12 @@ namespace EngiShotgu
 			this.PlasmaGrenadeGhostObject.AddComponent<NetworkBehaviour>();
 			ContentAddition.AddProjectile(Engiplugin.PlasmaGrenadeObject);
 		}
-
+		
 		public InterruptPriority reloadInterruptPriority = InterruptPriority.Skill;
 		public float graceDuration;
 		public SerializableEntityStateType reloadState;
 
-		public int stock = 6;
+		public int stock = 8;
 
 
 
