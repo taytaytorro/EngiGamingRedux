@@ -1,7 +1,8 @@
 ﻿using System;
+using UnityEngine;
+using System.IO;
 using System.Collections.Generic;
 using BepInEx;
-using EngiShotgun.Assets;
 using EntityStates;
 using EntityStates.Engi.EngiWeapon.Rux1;
 using EntityStates.Engi.EngiWeapon.Rux2;
@@ -11,8 +12,9 @@ using R2API.Utils;
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
-using UnityEngine;
 using UnityEngine.Networking;
+
+
 
 namespace EngiShotgu
 {
@@ -31,12 +33,47 @@ namespace EngiShotgu
 		"ProjectileAPI",
 		"EffectAPI"
 	})]
+	
 	public class Engiplugin : BaseUnityPlugin
 	{
-		// Token: 0x06000023 RID: 35 RVA: 0x00002B08 File Offset: 0x00000D08
+
+		public static AssetBundle assetBundle = null;
+		private bool load = true;
 		public static PluginInfo PInfo { get; private set; }
+		public Sprite gaussShotgunIconS;
+		public Sprite plasmaGrenadeIconS;
+		private void LoadAssetBundle()
+		{
+			if (assetBundle == null)
+			{
+				string dir = System.IO.Path.GetDirectoryName(Info.Location);
+				assetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(PInfo.Location, "..", "AssetBundleStaging", "icons"));
+				load = assetBundle;
+				Logger.LogMessage("loaded");
+			}
+			if (!load)
+			{
+				Logger.LogMessage("load failed");
+				return; 
+			}
+			gaussShotgunIconS = assetBundle.LoadAsset<Sprite>("Assets/Icons/engishotgunicon.png");
+			plasmaGrenadeIconS = assetBundle.LoadAsset<Sprite>("Assets/Icons/grenade1.png");
+		}
+
+		// Token: 0x04000027 RID: 39
+		
+
+		// Token: 0x04000028 RID: 40
+		//public static Sprite gaussShotgunIconS = Assets.TexToSprite(Engiplugin.gaussShotgunIcon);
+
+		// Token: 0x04000029 RID: 41
+		
+
+		// Token: 0x0400002A RID: 42
+		//public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
 		public void Awake()
 		{
+
 			PInfo = Info;
 			this.SetupProjectiles();
 			GameObject gameObject = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody");
@@ -53,7 +90,7 @@ namespace EngiShotgu
 			skillDef.beginSkillCooldownOnSkillEnd = true;
 			skillDef.canceledFromSprinting = false;
 			skillDef.fullRestockOnAssign = false;
-			skillDef.interruptPriority = EntityStates.InterruptPriority.Any;
+			skillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
 			skillDef.isCombatSkill = true;
 			skillDef.mustKeyPress = false;
 			skillDef.cancelSprintingOnActivation = true;
@@ -62,12 +99,12 @@ namespace EngiShotgu
 			skillDef.requiredStock = 1;
 			skillDef.stockToConsume = 0;
 			skillDef.resetCooldownTimerOnUse = true;
-			skillDef.icon = Engiplugin.gaussShotgunIconS;
+			skillDef.icon = gaussShotgunIconS;
 			skillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 6 total rounds.";
 			skillDef.skillName = "EngiShotgun";
 			skillDef.skillNameToken = "Gauss Scatter";
 			skillDef.reloadState = new SerializableEntityStateType(typeof(Reload));
-			skillDef.reloadInterruptPriority = InterruptPriority.Skill;
+			skillDef.reloadInterruptPriority = InterruptPriority.Any;
 			skillDef.graceDuration = .75f;
 			ContentAddition.AddSkillDef(skillDef);
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
@@ -78,7 +115,7 @@ namespace EngiShotgu
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
 			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
 			variants[num] = variant;
-			
+
 			R2API.ContentAddition.AddEntityState<PlasmaGrenade>(out _);
 
 			var skillDef2 = ScriptableObject.CreateInstance<SkillDef>();
@@ -97,7 +134,7 @@ namespace EngiShotgu
 			skillDef2.rechargeStock = 1;
 			skillDef2.requiredStock = 1;
 			skillDef2.stockToConsume = 1;
-			skillDef2.icon = Engiplugin.plasmaGrenadeIconS;
+			skillDef2.icon = plasmaGrenadeIconS;
 			skillDef2.skillDescriptionToken = "Take aim and lob a plasma grenade that deals <style=cIsDamage>600% damage</style> on impact and leaves a pool of plasma that deals <style=cIsDamage>30% damage per tick</style> and <style=cIsUtility>slows</style>. Can hold up to 2.";
 			skillDef2.skillName = "PlasmaGrenade";
 			skillDef2.skillNameToken = "Plasma Grenade";
@@ -110,7 +147,7 @@ namespace EngiShotgu
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
 			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
 			variants2[num2] = variant;
-			
+
 
 		}
 
@@ -172,23 +209,14 @@ namespace EngiShotgu
 			this.PlasmaGrenadeGhostObject.AddComponent<NetworkBehaviour>();
 			ContentAddition.AddProjectile(Engiplugin.PlasmaGrenadeObject);
 		}
+
 		public InterruptPriority reloadInterruptPriority = InterruptPriority.Skill;
 		public float graceDuration;
 		public SerializableEntityStateType reloadState;
 
 		public int stock = 6;
 
-		// Token: 0x04000027 RID: 39
-		public static Sprite gaussShotgunIconS = Icons.icons.LoadAsset<Sprite>("Assets/Icons/engishotgunicon");
 
-		// Token: 0x04000028 RID: 40
-		//public static Sprite gaussShotgunIconS = Assets.TexToSprite(Engiplugin.gaussShotgunIcon);
-
-		// Token: 0x04000029 RID: 41
-		public static Sprite plasmaGrenadeIconS = Icons.icons.LoadAsset<Sprite>("Assets/Icons/grenade1");
-
-		// Token: 0x0400002A RID: 42
-		//public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
 
 		// Token: 0x0400002B RID: 43
 		public static GameObject PlasmaGrenadeObject;

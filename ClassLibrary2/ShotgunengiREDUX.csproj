@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EngiShotgun\**" />
     <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="EngiShotgun\**" />
     <EmbeddedResource Remove="Properties\**" />
+    <None Remove="EngiShotgun\**" />
     <None Remove="Properties\**" />
   </ItemGroup>
 

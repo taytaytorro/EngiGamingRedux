@@ -2,9 +2,8 @@
 using System.IO;
 
 //Static class for ease of access
-public static class Icons
-{
-	//The mod's AssetBundle
+
+	/*//The mod's AssetBundle
 	public static AssetBundle icons;
 	//A constant of the AssetBundle's name.
 	// Not necesary, but useful if you want to store the bundle on its own folder.
@@ -24,5 +23,5 @@ public static class Icons
 	{
 		//Loads the assetBundle from the Path, and stores it in the static field.
 		icons = AssetBundle.LoadFromFile(AssetBundlePath);
-	}
-}
+	}*/
+
