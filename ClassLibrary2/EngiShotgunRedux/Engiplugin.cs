@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BepInEx;
-using ShotgunengiREDUX.Properties;
 using EngiShotgun.Assets;
 using EntityStates;
 using EntityStates.Engi.EngiWeapon.Rux1;
@@ -19,7 +18,7 @@ namespace EngiShotgu
 {
 	// Token: 0x02000007 RID: 7
 	[BepInDependency("com.bepis.r2api")]
-	[BepInPlugin("com.Ruxbieno.EngiShotgun", "EngiGamingREDUX", "1.0.1")]
+	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.1")]
 	[R2APISubmoduleDependency(new string[]
 	{
 		"PrefabAPI",
@@ -35,8 +34,10 @@ namespace EngiShotgu
 	public class Engiplugin : BaseUnityPlugin
 	{
 		// Token: 0x06000023 RID: 35 RVA: 0x00002B08 File Offset: 0x00000D08
+		public static PluginInfo PInfo { get; private set; }
 		public void Awake()
 		{
+			PInfo = Info;
 			this.SetupProjectiles();
 			GameObject gameObject = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody");
 			SkillLocator component = gameObject.GetComponent<SkillLocator>();
@@ -178,13 +179,13 @@ namespace EngiShotgu
 		public int stock = 6;
 
 		// Token: 0x04000027 RID: 39
-		public static Texture2D gaussShotgunIcon = Assets.LoadTexture2D(ShotgunengiREDUX.Properties.Resources.engishotgunicon);
+		public static Texture2D gaussShotgunIcon = Icons.icons.LoadAsset<Texture2D>("Assets/Icons/engishotgunicon.png");
 
 		// Token: 0x04000028 RID: 40
 		public static Sprite gaussShotgunIconS = Assets.TexToSprite(Engiplugin.gaussShotgunIcon);
 
 		// Token: 0x04000029 RID: 41
-		public static Texture2D plasmaGrenadeIcon = Assets.LoadTexture2D(ShotgunengiREDUX.Properties.Resources.grenade1);
+		public static Texture2D plasmaGrenadeIcon = Icons.icons.LoadAsset<Texture2D>("Assets/Icons/grenade1.png");
 
 		// Token: 0x0400002A RID: 42
 		public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
@@ -203,5 +204,8 @@ namespace EngiShotgu
 
 		// Token: 0x0400002F RID: 47
 		public static GameObject projectilePrefab;
+
+
+
 	}
 }

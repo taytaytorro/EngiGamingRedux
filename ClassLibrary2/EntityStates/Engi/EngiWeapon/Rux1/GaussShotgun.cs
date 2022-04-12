@@ -4,7 +4,6 @@ using EntityStates.Mage.Weapon;
 using RoR2;
 using UnityEngine;
 using EntityStates.Engi.EngiWeapon.Reload;
-using ShotgunengiREDUX;
 using EngiShotgu;
 
 namespace EntityStates.Engi.EngiWeapon.Rux1
