@@ -17,8 +17,8 @@ using UnityEngine.Networking;
 namespace EngiShotgu
 {
 	// Token: 0x02000007 RID: 7
-	[BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.HardDependency)]
-	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.1")]
+	[BepInDependency("com.bepis.r2api")]
+	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.2")]
 	[R2APISubmoduleDependency(new string[]
 	{
 		"PrefabAPI",
@@ -39,7 +39,8 @@ namespace EngiShotgu
 		{
 			PInfo = Info;
 			this.SetupProjectiles();
-			SkillLocator component = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody").GetComponent<SkillLocator>();
+			GameObject gameObject = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody");
+			SkillLocator component = gameObject.GetComponent<SkillLocator>();
 			SkillFamily skillFamily = component.primary.skillFamily;
 			SkillFamily skillFamily2 = component.secondary.skillFamily;
 			//SkillFamily skillFamily3 = component.special.skillFamily;
@@ -126,12 +127,14 @@ namespace EngiShotgu
 			this.PlasmaGrenadeGhostObject = PrefabAPI.InstantiateClone(Engiplugin.PlasmaGrenadeObject.GetComponent<ProjectileController>().ghostPrefab, "PlasmaGrenadeGhost", false);
 			Engiplugin.projectilePrefabs.Add(Engiplugin.PlasmaGrenadeObject);
 			Engiplugin.PlasmaGrenadeObject.GetComponent<ProjectileController>().ghostPrefab = this.PlasmaGrenadeGhostObject;
-			//Logger.LogMessage("adding1");
+			Logger.LogMessage("adding1");
 			//Engiplugin.PlasmaGrenadeObject.AddComponent<NetworkIdentity>();
 			Engiplugin.PlasmaGrenadeObject.AddComponent<NetworkBehaviour>();
 			GameObject gameObject = PrefabAPI.InstantiateClone(LegacyResourcesAPI.Load<GameObject>("prefabs/projectiles/crocoleapacid"), "BasedPlasmaPuddle", true);
 			Engiplugin.projectilePrefabs.Add(gameObject);
+			Logger.LogMessage("adding2");
 			base.gameObject.AddComponent<NetworkIdentity>();
+			Logger.LogMessage("adding3");
 			base.gameObject.AddComponent<NetworkBehaviour>();
 			ProjectileDamage component = gameObject.GetComponent<ProjectileDamage>();
 			component.damageType = DamageType.SlowOnHit;
@@ -143,30 +146,29 @@ namespace EngiShotgu
 			component2.lifetime = 5f;
 			component2.damageCoefficient = 0.3f;
 			GameObject gameObject2 = PrefabAPI.InstantiateClone(LegacyResourcesAPI.Load<GameObject>("prefabs/effects/impacteffects/engimineexplosion"), "PlasmaGrenadeBoomEffect", false);
-			gameObject2.GetComponent<EffectComponent>().soundName = "Play_acrid_shift_land";
-			gameObject2.AddComponent<NetworkIdentity>();
-			gameObject2.AddComponent<NetworkBehaviour>();
-			Engiplugin.effectDefs.Add(new EffectDef(gameObject2));
-			Engiplugin.PlasmaGrenadeObject.GetComponent<ProjectileSimple>().desiredForwardSpeed = 60f;
-			ProjectileImpactExplosion component3 = Engiplugin.PlasmaGrenadeObject.GetComponent<ProjectileImpactExplosion>();
-			component3.blastRadius = 8.51f;
+			//gameObject2.GetComponent<EffectComponent>().soundName = "Play_acrid_shift_land";
+			EffectComponent component3 = gameObject2.GetComponent<EffectComponent>();
+			ProjectileImpactExplosion component4 = Engiplugin.PlasmaGrenadeObject.GetComponent<ProjectileImpactExplosion>();
+			component4.blastRadius = 8.51f;
 			Engiplugin.PlasmaGrenadeObject.GetComponent<ProjectileDamage>().damageType = DamageType.SlowOnHit;
-			component3.blastProcCoefficient = 1f;
-			component3.falloffModel = 0;
-			component3.lifetime = 20f;
-			component3.impactEffect = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/impacteffects/engimineexplosion");
-			component3.explosionSoundString = "Play_engi_M2_explo";
-			component3.timerAfterImpact = false;
-			component3.lifetimeAfterImpact = 0f;
-			component3.destroyOnWorld = true;
-			component3.destroyOnEnemy = true;
-			component3.fireChildren = true;
-			component3.childrenCount = 1;
-			component3.childrenDamageCoefficient = 0.3f;
-			component3.childrenProjectilePrefab = gameObject;
+			component4.blastProcCoefficient = 1f;
+			component4.falloffModel = 0;
+			component4.lifetime = 20f;
+			component4.impactEffect = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/impacteffects/engimineexplosion");
+			component4.explosionSoundString = "Play_engi_M2_explo";
+			component4.timerAfterImpact = false;
+			component4.lifetimeAfterImpact = 0f;
+			component4.destroyOnWorld = true;
+			component4.destroyOnEnemy = true;
+			component4.fireChildren = true;
+			component4.childrenCount = 1;
+			component4.childrenDamageCoefficient = 0.3f;
+			component4.childrenProjectilePrefab = gameObject;
 			UnityEngine.Object.Destroy(Engiplugin.PlasmaGrenadeObject.GetComponent<ProjectileStickOnImpact>());
 			Engiplugin.PlasmaGrenadeObject.GetComponent<Rigidbody>().useGravity = true;
+			Logger.LogMessage("adding6");
 			this.PlasmaGrenadeGhostObject.AddComponent<NetworkIdentity>();
+			Logger.LogMessage("adding7");
 			this.PlasmaGrenadeGhostObject.AddComponent<NetworkBehaviour>();
 			ContentAddition.AddProjectile(Engiplugin.PlasmaGrenadeObject);
 		}
