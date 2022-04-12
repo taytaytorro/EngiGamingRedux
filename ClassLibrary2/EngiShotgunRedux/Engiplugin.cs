@@ -179,16 +179,16 @@ namespace EngiShotgu
 		public int stock = 6;
 
 		// Token: 0x04000027 RID: 39
-		public static Texture2D gaussShotgunIcon = Icons.icons.LoadAsset<Texture2D>("Assets/Icons/engishotgunicon.png");
+		public static Sprite gaussShotgunIconS = Icons.icons.LoadAsset<Sprite>("Assets/Icons/engishotgunicon");
 
 		// Token: 0x04000028 RID: 40
-		public static Sprite gaussShotgunIconS = Assets.TexToSprite(Engiplugin.gaussShotgunIcon);
+		//public static Sprite gaussShotgunIconS = Assets.TexToSprite(Engiplugin.gaussShotgunIcon);
 
 		// Token: 0x04000029 RID: 41
-		public static Texture2D plasmaGrenadeIcon = Icons.icons.LoadAsset<Texture2D>("Assets/Icons/grenade1.png");
+		public static Sprite plasmaGrenadeIconS = Icons.icons.LoadAsset<Sprite>("Assets/Icons/grenade1");
 
 		// Token: 0x0400002A RID: 42
-		public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
+		//public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
 
 		// Token: 0x0400002B RID: 43
 		public static GameObject PlasmaGrenadeObject;

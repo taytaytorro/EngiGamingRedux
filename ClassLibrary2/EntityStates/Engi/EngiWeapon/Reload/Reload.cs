@@ -106,6 +106,6 @@ namespace EntityStates.Engi.EngiWeapon.Reload
 		public static float baseDuration;
 
 		// Token: 0x04001A3F RID: 6719
-		private bool hasGivenStock;
+		//private bool hasGivenStock;
 	}
 }
