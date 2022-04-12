@@ -93,7 +93,7 @@ namespace EngiShotgu
 			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
 			reloadSkillDef.activationStateMachineName = "Weapon";
 			reloadSkillDef.baseMaxStock = this.stock;
-			//	reloadSkillDef.baseRechargeInterval = GaussShotgun.duration + 0.05f;
+			reloadSkillDef.baseRechargeInterval = .75f;
 			reloadSkillDef.beginSkillCooldownOnSkillEnd = true;
 			reloadSkillDef.canceledFromSprinting = false;
 			reloadSkillDef.fullRestockOnAssign = true;
