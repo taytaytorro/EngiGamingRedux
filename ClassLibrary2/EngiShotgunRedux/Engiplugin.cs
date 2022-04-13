@@ -97,7 +97,7 @@ namespace EngiShotgu
 			reloadSkillDef.beginSkillCooldownOnSkillEnd = true;
 			reloadSkillDef.canceledFromSprinting = false;
 			reloadSkillDef.fullRestockOnAssign = true;
-			reloadSkillDef.interruptPriority = InterruptPriority.Any;
+			reloadSkillDef.interruptPriority = InterruptPriority.Skill;
 			reloadSkillDef.resetCooldownTimerOnUse = true;
 			reloadSkillDef.mustKeyPress = false;
 			reloadSkillDef.isCombatSkill = true;
@@ -106,7 +106,11 @@ namespace EngiShotgu
 			reloadSkillDef.rechargeStock = 1;
 			reloadSkillDef.requiredStock = 1;
 			reloadSkillDef.stockToConsume = 1;
+
 			ContentAddition.AddSkillDef(reloadSkillDef);
+			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(EntityStates.Engi.EngiWeapon.Reload.Reload));
+			reloadSkillDef.graceDuration = .7f;
+			reloadSkillDef.reloadInterruptPriority = InterruptPriority.Any;
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;
 			int num = skillFamily.variants.Length - 1;
