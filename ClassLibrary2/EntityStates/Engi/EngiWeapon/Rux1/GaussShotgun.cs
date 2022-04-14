@@ -1,16 +1,17 @@
 ﻿using System;
-using EntityStates.Engi.EngiWeapon.Reload;
 using EntityStates.EngiTurret.EngiTurretWeapon;
 using EntityStates.Mage.Weapon;
 using RoR2;
 using UnityEngine;
-
+using EntityStates;
 namespace EntityStates.Engi.EngiWeapon.Rux1
+
 {
-	// Token: 0x02000004 RID: 4
+	// Token: 0x02000020 RID: 32
 	public class GaussShotgun : BaseState
 	{
-		// Token: 0x0600000E RID: 14 RVA: 0x000022C4 File Offset: 0x000004C4
+
+		// Token: 0x060000AE RID: 174 RVA: 0x0000585B File Offset: 0x00003A5B
 		public override void OnEnter()
 		{
 			base.OnEnter();
@@ -23,13 +24,7 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			this.FireGauntlet();
 		}
 
-		// Token: 0x0600000F RID: 15 RVA: 0x0000234B File Offset: 0x0000054B
-		public override void OnExit()
-		{
-			base.OnExit();
-		}
 
-		// Token: 0x06000010 RID: 16 RVA: 0x00002354 File Offset: 0x00000554
 		private void FireGauntlet()
 		{
 			base.characterBody.AddSpreadBloom(0.5f);
@@ -96,16 +91,24 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 					hitEffectPrefab = FireGauss.hitEffectPrefab
 				}.Fire();
 			}
+			if (hasfired == true)
+			{
+				this.outer.SetNextState(new Reload.EnterReload());
+			}
+
 		}
-
-		// Token: 0x06000011 RID: 17 RVA: 0x00002608 File Offset: 0x00000808
-
-		// Token: 0x06000012 RID: 18 RVA: 0x00002639 File Offset: 0x00000839
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
-			return InterruptPriority.PrioritySkill;
+			if (base.fixedAge <= this.minimumDuration)
+			{
+				return InterruptPriority.Skill;
+			}
+			return InterruptPriority.Any;
 		}
 
+		public bool hasfired;
+		
+		protected float minimumDuration;
 		// Token: 0x04000005 RID: 5
 		public static float procCoefficient = 0.45f;
 
@@ -144,12 +147,6 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 
 		// Token: 0x04000011 RID: 17
 		public static string attackString;
-
-		// Token: 0x04000012 RID: 18
-		private bool hasFiredGauntlet;
-
-		// Token: 0x04000013 RID: 19
-		private Animator animator;
 
 		// Token: 0x04000014 RID: 20
 		public FireLaserbolt.Gauntlet gauntlet;

@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using UnityEngine;
+using BepInEx;
 
 namespace EntityStates.Engi.EngiWeapon.Reload
 {
@@ -8,11 +9,12 @@ namespace EntityStates.Engi.EngiWeapon.Reload
     {
         // Token: 0x1700012E RID: 302
         // (get) Token: 0x0600147D RID: 5245 RVA: 0x0005B2FC File Offset: 0x000594FC
+        public float reloadtime = 0.75f;
         private float duration
         {
             get
             {
-                return baseDuration / this.attackSpeedStat;
+                return reloadtime / this.attackSpeedStat;
             }
         }
 
@@ -20,6 +22,7 @@ namespace EntityStates.Engi.EngiWeapon.Reload
         public override void OnEnter()
         {
             base.OnEnter();
+            base.PlayAnimation("Gesture, Additive", (base.characterBody.isSprinting && base.characterMotor && base.characterMotor.isGrounded) ? "ReloadSimple" : "ChargeGrenades", "Reload.playbackRate", this.duration);
             Util.PlayAttackSpeedSound(enterSoundString, base.gameObject, enterSoundPitch);
             EffectManager.SimpleMuzzleFlash(reloadEffectPrefab, base.gameObject, reloadEffectMuzzleString, false);
         }

@@ -66,18 +66,11 @@ namespace EngiShotgu
 		// Token: 0x04000027 RID: 39
 		
 
-		// Token: 0x04000028 RID: 40
-		//public static Sprite gaussShotgunIconS = Assets.TexToSprite(Engiplugin.gaussShotgunIcon);
 
-		// Token: 0x04000029 RID: 41
-		
-
-		// Token: 0x0400002A RID: 42
-		//public static Sprite plasmaGrenadeIconS = Assets.TexToSprite(Engiplugin.plasmaGrenadeIcon);
 		public void Awake()
 		{
-			
-
+			R2API.ContentAddition.AddEntityState<EnterReload>(out _);
+			R2API.ContentAddition.AddEntityState<Reload>(out _);
 			LoadAssetBundle();
 			this.SetupProjectiles();
 			SkillLocator component = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody").GetComponent<SkillLocator>();
@@ -85,39 +78,40 @@ namespace EngiShotgu
 			SkillFamily skillFamily2 = component.secondary.skillFamily;
 
 			R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
-			SkillDef skillDef2 = ScriptableObject.CreateInstance<SkillDef>();
-			skillDef2.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 8 total rounds.";
-			skillDef2.skillName = "EngiShotgun";
-			skillDef2.skillNameToken = "Gauss Scatter";
-			skillDef2.icon = gaussShotgunIconS;
-			skillDef2.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
-			skillDef2.activationStateMachineName = "Weapon";
-			skillDef2.baseMaxStock = 1;
-			//skillDef2.baseRechargeInterval = .75f;
-			skillDef2.beginSkillCooldownOnSkillEnd = true;
-			skillDef2.canceledFromSprinting = false;
-			skillDef2.fullRestockOnAssign = true;
-			skillDef2.interruptPriority = InterruptPriority.Skill;
-			skillDef2.resetCooldownTimerOnUse = true;
-			skillDef2.mustKeyPress = false;
-			skillDef2.isCombatSkill = true;
-			skillDef2.cancelSprintingOnActivation = true;
-			skillDef2.forceSprintDuringState = false;
-			skillDef2.rechargeStock = 1;
-			skillDef2.requiredStock = 1;
-			skillDef2.stockToConsume = 0;
+			ReloadSkillDef reloadSkillDef = ScriptableObject.CreateInstance<ReloadSkillDef>();
 
-			ContentAddition.AddSkillDef(skillDef2);
-			//skillDef2.reloadState = new SerializableEntityStateType(typeof(EntityStates.Engi.EngiWeapon.Reload.Reload));
-			//skillDef2.graceDuration = .7f;
-			//skillDef2.reloadInterruptPriority = InterruptPriority.Any;
+			reloadSkillDef.icon = gaussShotgunIconS;
+			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
+			reloadSkillDef.activationStateMachineName = "Weapon";
+			reloadSkillDef.baseMaxStock = this.stock;
+			reloadSkillDef.baseRechargeInterval = 0f;
+			reloadSkillDef.dontAllowPastMaxStocks = true;
+			reloadSkillDef.beginSkillCooldownOnSkillEnd = false;
+			reloadSkillDef.canceledFromSprinting = false;
+			reloadSkillDef.fullRestockOnAssign = true;
+			reloadSkillDef.interruptPriority = InterruptPriority.Skill;
+			reloadSkillDef.keywordTokens = new string[0];
+			reloadSkillDef.resetCooldownTimerOnUse = true;
+			reloadSkillDef.mustKeyPress = false;
+			reloadSkillDef.isCombatSkill = true;
+			reloadSkillDef.cancelSprintingOnActivation = true;
+			reloadSkillDef.forceSprintDuringState = false;
+			reloadSkillDef.rechargeStock = 0;
+			reloadSkillDef.requiredStock = 1;
+			reloadSkillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 8 total rounds.";
+			reloadSkillDef.skillName = "EngiShotgun";
+			reloadSkillDef.skillNameToken = "Gauss Scatter";
+			reloadSkillDef.stockToConsume = 1;
+			reloadSkillDef.graceDuration = 0.3f;
+			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(EntityStates.Engi.EngiWeapon.Reload.Reload));
+			reloadSkillDef.reloadInterruptPriority = InterruptPriority.Any;
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;
 			int num = skillFamily.variants.Length - 1;
 			SkillFamily.Variant variant = default(SkillFamily.Variant);
-			variant.skillDef = skillDef2;
+			variant.skillDef = reloadSkillDef;
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-			variant.viewableNode = new ViewablesCatalog.Node(skillDef2.skillNameToken, false, null);
+			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
 			variants[num] = variant;
 
 
@@ -154,7 +148,7 @@ namespace EngiShotgu
 			variant = default(SkillFamily.Variant);
 			variant.skillDef = skillDef;
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
+			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
 			variants2[num2] = variant;
 		}
 
