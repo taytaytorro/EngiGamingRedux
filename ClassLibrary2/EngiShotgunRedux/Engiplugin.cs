@@ -85,43 +85,43 @@ namespace EngiShotgu
 			SkillFamily skillFamily2 = component.secondary.skillFamily;
 
 			R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
-			ReloadSkillDef reloadSkillDef = ScriptableObject.CreateInstance<ReloadSkillDef>();
-			reloadSkillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 8 total rounds.";
-			reloadSkillDef.skillName = "EngiShotgun";
-			reloadSkillDef.skillNameToken = "Gauss Scatter";
-			reloadSkillDef.icon = gaussShotgunIconS;
-			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
-			reloadSkillDef.activationStateMachineName = "Weapon";
-			reloadSkillDef.baseMaxStock = this.stock;
-			reloadSkillDef.baseRechargeInterval = .75f;
-			reloadSkillDef.beginSkillCooldownOnSkillEnd = true;
-			reloadSkillDef.canceledFromSprinting = false;
-			reloadSkillDef.fullRestockOnAssign = true;
-			reloadSkillDef.interruptPriority = InterruptPriority.Skill;
-			reloadSkillDef.resetCooldownTimerOnUse = true;
-			reloadSkillDef.mustKeyPress = false;
-			reloadSkillDef.isCombatSkill = true;
-			reloadSkillDef.cancelSprintingOnActivation = true;
-			reloadSkillDef.forceSprintDuringState = false;
-			reloadSkillDef.rechargeStock = 1;
-			reloadSkillDef.requiredStock = 1;
-			reloadSkillDef.stockToConsume = 1;
+			SkillDef skillDef2 = ScriptableObject.CreateInstance<SkillDef>();
+			skillDef2.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 8 total rounds.";
+			skillDef2.skillName = "EngiShotgun";
+			skillDef2.skillNameToken = "Gauss Scatter";
+			skillDef2.icon = gaussShotgunIconS;
+			skillDef2.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
+			skillDef2.activationStateMachineName = "Weapon";
+			skillDef2.baseMaxStock = 1;
+			//skillDef2.baseRechargeInterval = .75f;
+			skillDef2.beginSkillCooldownOnSkillEnd = true;
+			skillDef2.canceledFromSprinting = false;
+			skillDef2.fullRestockOnAssign = true;
+			skillDef2.interruptPriority = InterruptPriority.Skill;
+			skillDef2.resetCooldownTimerOnUse = true;
+			skillDef2.mustKeyPress = false;
+			skillDef2.isCombatSkill = true;
+			skillDef2.cancelSprintingOnActivation = true;
+			skillDef2.forceSprintDuringState = false;
+			skillDef2.rechargeStock = 1;
+			skillDef2.requiredStock = 1;
+			skillDef2.stockToConsume = 0;
 
-			ContentAddition.AddSkillDef(reloadSkillDef);
-			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(EntityStates.Engi.EngiWeapon.Reload.Reload));
-			reloadSkillDef.graceDuration = .7f;
-			reloadSkillDef.reloadInterruptPriority = InterruptPriority.Any;
+			ContentAddition.AddSkillDef(skillDef2);
+			//skillDef2.reloadState = new SerializableEntityStateType(typeof(EntityStates.Engi.EngiWeapon.Reload.Reload));
+			//skillDef2.graceDuration = .7f;
+			//skillDef2.reloadInterruptPriority = InterruptPriority.Any;
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;
 			int num = skillFamily.variants.Length - 1;
 			SkillFamily.Variant variant = default(SkillFamily.Variant);
-			variant.skillDef = reloadSkillDef;
+			variant.skillDef = skillDef2;
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
+			variant.viewableNode = new ViewablesCatalog.Node(skillDef2.skillNameToken, false, null);
 			variants[num] = variant;
 
 
-			
+
 
 
 
@@ -154,7 +154,7 @@ namespace EngiShotgu
 			variant = default(SkillFamily.Variant);
 			variant.skillDef = skillDef;
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
+			variant.viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null);
 			variants2[num2] = variant;
 		}
 

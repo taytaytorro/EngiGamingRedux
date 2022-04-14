@@ -20,7 +20,7 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 			this.muzzleString2 = "MuzzleLeft";
 			base.PlayAnimation("Gesture Right, Additive", "FireGrenadeRight", "FireGauntlet.playbackRate", this.duration);
 			base.PlayAnimation("Gesture Left, Additive", "FireGrenadeLeft", "FireGauntlet.playbackRate", this.duration);
-			this.Fire();
+			this.FireGauntlet();
 		}
 
 		// Token: 0x0600000F RID: 15 RVA: 0x0000234B File Offset: 0x0000054B
@@ -30,11 +30,11 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 		}
 
 		// Token: 0x06000010 RID: 16 RVA: 0x00002354 File Offset: 0x00000554
-		private void Fire()
+		private void FireGauntlet()
 		{
 			base.characterBody.AddSpreadBloom(0.5f);
 			EffectManager.SimpleMuzzleFlash(FireGauss.effectPrefab, base.gameObject, this.muzzleString, false);
-			Util.PlaySound("HenryShootUzi", base.gameObject);
+			Util.PlaySound(FireGauss.attackSoundString, base.gameObject);
 			if (base.isAuthority)
 			{
 				Ray aimRay = base.GetAimRay();
