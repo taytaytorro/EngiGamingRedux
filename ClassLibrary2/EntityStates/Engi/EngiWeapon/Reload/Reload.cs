@@ -91,7 +91,7 @@ namespace EntityStates.Engi.EngiWeapon.Reload
         public static string reloadEffectMuzzleString;
 
         // Token: 0x04001A3E RID: 6718
-        public static float baseDuration;
+        public static float baseDuration = 3;
 
         // Token: 0x04001A3F RID: 6719
         private bool hasGivenStock;

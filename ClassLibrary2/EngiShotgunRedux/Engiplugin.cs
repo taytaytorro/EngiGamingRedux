@@ -86,6 +86,7 @@ namespace EngiShotgu
 			reloadSkillDef.skillNameToken = "Gauss Scatter";
 			reloadSkillDef.activationStateMachineName = "Weapon";
 			reloadSkillDef.beginSkillCooldownOnSkillEnd = false;
+			reloadSkillDef.fullRestockOnAssign = false;
 			reloadSkillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
 			reloadSkillDef.isCombatSkill = true;
 			reloadSkillDef.cancelSprintingOnActivation = true;
@@ -93,9 +94,9 @@ namespace EngiShotgu
 			reloadSkillDef.mustKeyPress = false;
 			reloadSkillDef.icon = gaussShotgunIconS;
 			reloadSkillDef.requiredStock = 1;
-			reloadSkillDef.stockToConsume = 1;
+			reloadSkillDef.stockToConsume = 0;
 			reloadSkillDef.reloadInterruptPriority = InterruptPriority.Any;
-			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(EnterReload));
+			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(Reload));
 			reloadSkillDef.graceDuration = 0.5f;
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;
