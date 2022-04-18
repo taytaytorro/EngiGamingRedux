@@ -106,53 +106,6 @@ namespace EngiShotgu
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
 			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
 			variants[num] = variant;
-/*
-			#region Blast
-			primaryBlastDef = ReloadSkillDef.CreateInstance<ReloadSkillDef>();
-			primaryBlastDef.activationState = new SerializableEntityStateType(typeof(Blast));
-			primaryBlastDef.baseRechargeInterval = 0f;
-			if (!Blast.noReload)
-			{
-				primaryBlastDef.baseMaxStock = blastStock;
-				primaryBlastDef.rechargeStock = 0;
-			}
-			else
-			{
-				primaryBlastDef.baseRechargeInterval = 0f;
-				primaryBlastDef.baseMaxStock = 1;
-				primaryBlastDef.rechargeStock = 1;
-			}
-			primaryBlastDef.skillDescriptionToken = "";
-			primaryBlastDef.skillDescriptionToken += "Fire a slug " + (Blast.penetrateEnemies ? "that pierces " : "") + "for <style=cIsDamage>" + Blast.damageCoefficient.ToString("P0").Replace(" ", "").Replace(",", "") + " damage</style>.";
-			if (primaryBlastDef.baseRechargeInterval > 0f)
-			{
-				primaryBlastDef.skillDescriptionToken += " Can hold up to " + primaryBlastDef.baseMaxStock + " bullets.";
-			}
-			primaryBlastDef.skillDescriptionToken += Environment.NewLine;
-
-			primaryBlastDef.skillName = "FireSlug";
-			primaryBlastDef.skillNameToken = "BANDITRELOADED_PRIMARY_NAME";
-			primaryBlastDef.activationStateMachineName = "Weapon";
-			primaryBlastDef.beginSkillCooldownOnSkillEnd = false;
-
-			primaryBlastDef.isCombatSkill = true;
-			primaryBlastDef.cancelSprintingOnActivation = true;
-			primaryBlastDef.canceledFromSprinting = false;
-			primaryBlastDef.mustKeyPress = false;
-			primaryBlastDef.icon = ModContentPack.assets.LoadAsset<Sprite>("skill1.png");
-
-
-
-
-			primaryBlastDef.reloadInterruptPriority = InterruptPriority.Any;
-			primaryBlastDef.reloadState = new SerializableEntityStateType(typeof(EntityStates.Bandit2.Weapon.EnterReload));
-			primaryBlastDef.graceDuration = 0.5f;
-
-			ModContentPack.skillDefs.Add(primaryBlastDef);
-			#endregion
-
-			*/
-
 
 
 
