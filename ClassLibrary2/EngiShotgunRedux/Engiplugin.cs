@@ -21,7 +21,7 @@ namespace EngiShotgu
 {
 	// Token: 0x02000007 RID: 7
 	[BepInDependency("com.bepis.r2api")]
-	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.2")]
+	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.3")]
 	[R2APISubmoduleDependency(new string[]
 	{
 		"PrefabAPI",
