@@ -88,7 +88,8 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 					queryTriggerInteraction = 0,
 					hitEffectPrefab = FireGauss.hitEffectPrefab
 				}.Fire();
-
+				shotfired = true;
+				
 			}
 		}
 		public override void OnExit()
@@ -101,6 +102,11 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 		}
 		public override void FixedUpdate()
 		{
+			if (shotfired == true)
+            {
+				base.skillLocator.primary.DeductStock(1);
+				shotfired = false;
+			}
 			base.FixedUpdate();
 			this.buttonReleased |= !base.inputBank.skill1.down;
 			if (base.fixedAge >= this.maxDuration && base.isAuthority)
