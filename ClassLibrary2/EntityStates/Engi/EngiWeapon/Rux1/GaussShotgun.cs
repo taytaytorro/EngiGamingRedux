@@ -88,6 +88,7 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 					queryTriggerInteraction = 0,
 					hitEffectPrefab = FireGauss.hitEffectPrefab
 				}.Fire();
+
 			}
 		}
 		public override void OnExit()
@@ -127,6 +128,7 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 		private float maxDuration;
 		private float minDuration;
 		private bool buttonReleased;
+		private bool shotfired;
 		private string muzzleString;
 		private string muzzleString2;
 	}

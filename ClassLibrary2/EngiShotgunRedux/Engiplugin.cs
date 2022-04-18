@@ -79,7 +79,6 @@ namespace EngiShotgu
 			//R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
 			ReloadSkillDef reloadSkillDef = ScriptableObject.CreateInstance<ReloadSkillDef>();
 			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
-			reloadSkillDef.baseRechargeInterval = 0f;
 			reloadSkillDef.baseMaxStock = this.stock;
 			reloadSkillDef.rechargeStock = 1;
 			reloadSkillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 8 total rounds.";
