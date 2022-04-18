@@ -1,35 +1,33 @@
 ﻿using System;
-using EntityStates.EngiTurret.EngiTurretWeapon;
-using EntityStates.Mage.Weapon;
+using System.Collections.Generic;
+using System.Text;
 using RoR2;
 using UnityEngine;
-using EntityStates;
-namespace EntityStates.Engi.EngiWeapon.Rux1
+using UnityEngine.Networking;
+using EntityStates.EngiTurret.EngiTurretWeapon;
+using EntityStates.Mage.Weapon;
 
+namespace EntityStates.Engi.EngiWeapon.Rux1
 {
-	// Token: 0x02000020 RID: 32
 	public class GaussShotgun : BaseState
 	{
-
-		// Token: 0x060000AE RID: 174 RVA: 0x0000585B File Offset: 0x00003A5B
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			this.duration = 0.7f / this.attackSpeedStat;
-			base.characterBody.SetAimTimer(2f);
+			this.maxDuration = baseMaxDuration / this.attackSpeedStat;
+			this.minDuration = baseMaxDuration / this.attackSpeedStat;
+			Util.PlaySound(FireGauss.attackSoundString, base.gameObject);
+			base.characterBody.skillLocator.primary.rechargeStopwatch = 0f;
 			this.muzzleString = "MuzzleRight";
 			this.muzzleString2 = "MuzzleLeft";
-			base.PlayAnimation("Gesture Right, Additive", "FireGrenadeRight", "FireGauntlet.playbackRate", this.duration);
-			base.PlayAnimation("Gesture Left, Additive", "FireGrenadeLeft", "FireGauntlet.playbackRate", this.duration);
-			this.FireGauntlet();
-		}
-
-
-		private void FireGauntlet()
-		{
+			base.PlayAnimation("Gesture Right, Additive", "FireGrenadeRight", "FireGauntlet.playbackRate", maxDuration);
+			base.PlayAnimation("Gesture Left, Additive", "FireGrenadeLeft", "FireGauntlet.playbackRate", maxDuration);
 			base.characterBody.AddSpreadBloom(0.5f);
-			EffectManager.SimpleMuzzleFlash(FireGauss.effectPrefab, base.gameObject, this.muzzleString, false);
-			Util.PlaySound(FireGauss.attackSoundString, base.gameObject);
+			if (muzzleEffectPrefab)
+			{
+				EffectManager.SimpleMuzzleFlash(FireGauss.effectPrefab, base.gameObject, this.muzzleString, false);
+				EffectManager.SimpleMuzzleFlash(FireGauss.effectPrefab, base.gameObject, this.muzzleString2, false);
+			}
 			if (base.isAuthority)
 			{
 				Ray aimRay = base.GetAimRay();
@@ -91,80 +89,60 @@ namespace EntityStates.Engi.EngiWeapon.Rux1
 					hitEffectPrefab = FireGauss.hitEffectPrefab
 				}.Fire();
 			}
-			if (hasfired == true)
-			{
-				this.outer.SetNextState(new Reload.EnterReload());
-			}
-
 		}
+		public override void OnExit()
+		{
+			if (!buttonReleased && base.characterBody)
+			{
+				base.characterBody.SetSpreadBloom(0f, false);
+			}
+			base.OnExit();
+		}
+		public override void FixedUpdate()
+		{
+			base.FixedUpdate();
+			this.buttonReleased |= !base.inputBank.skill1.down;
+			if (base.fixedAge >= this.maxDuration && base.isAuthority)
+			{
+				this.outer.SetNextStateToMain();
+				return;
+			}
+		}
+
 		public override InterruptPriority GetMinimumInterruptPriority()
 		{
-			if (base.fixedAge <= this.minimumDuration)
+			if (this.buttonReleased && base.fixedAge >= this.minDuration)
 			{
-				return InterruptPriority.Skill;
+				return InterruptPriority.Any;
 			}
-			return InterruptPriority.Any;
+			return InterruptPriority.PrioritySkill;
 		}
 
-		public bool hasfired;
-		
-		protected float minimumDuration;
-		// Token: 0x04000005 RID: 5
-		public static float procCoefficient = 0.45f;
-
-		// Token: 0x04000006 RID: 6
-		public static float force = 20f;
-
-		// Token: 0x04000007 RID: 7
-		public static float recoil = 1.5f;
-
-		// Token: 0x04000008 RID: 8
-		public static float range = 256f;
-
-		// Token: 0x04000009 RID: 9
-		private float duration;
-
-		// Token: 0x0400000A RID: 10
-		private string muzzleString;
-
-		// Token: 0x0400000B RID: 11
-		private string muzzleString2;
-
-		// Token: 0x0400000C RID: 12
 		public static GameObject muzzleEffectPrefab;
-
-		// Token: 0x0400000D RID: 13
 		public static GameObject tracerEffectPrefab;
-
-		// Token: 0x0400000E RID: 14
 		public static GameObject impactEffectPrefab;
-
-		// Token: 0x0400000F RID: 15
-		public static float baseDuration = 2f;
-
-		// Token: 0x04000010 RID: 16
-		public static float damageCoefficient = 1.2f;
-
-		// Token: 0x04000011 RID: 17
-		public static string attackString;
-
-		// Token: 0x04000014 RID: 20
-		public FireLaserbolt.Gauntlet gauntlet;
-
-		// Token: 0x04000015 RID: 21
-		[SerializeField]
-		public GameObject crosshairOverridePrefab = Resources.Load<GameObject>("Prefabs/Crosshair/BanditCrosshair");
-
-		// Token: 0x04000016 RID: 22
-		private GameObject defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/BanditCrosshair");
-
-		// Token: 0x02000008 RID: 8
-		public enum Gauntlet
-		{
-			// Token: 0x0400002E RID: 46
-			Left,
-			// Token: 0x0400002F RID: 47
-			Right
-		}
+		public static float maxDistance;
+		public static float damageCoefficient;
+		public static float force;
+		public static float bulletRadius = 0.4f;
+		public static float baseMaxDuration;
+		public static float baseMinDuration;
+		public static float recoilAmplitude;
+		public static float spreadBloomValue;
+		public static bool individualReload;
+		public static bool useFalloff;
+		public static bool penetrateEnemies;
+		public static bool noReload;
+		public static float mashSpread;
+		private float maxDuration;
+		private float minDuration;
+		private bool buttonReleased;
+		private string muzzleString;
+		private string muzzleString2;
 	}
+
 }
+
+
+
+

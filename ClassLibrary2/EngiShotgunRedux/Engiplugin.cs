@@ -37,7 +37,6 @@ namespace EngiShotgu
 	
 	public class Engiplugin : BaseUnityPlugin
 	{
-
 		public static AssetBundle assetBundle = null;
 		private bool load = true;
 		public static PluginInfo PInfo { get; private set; }
@@ -69,42 +68,36 @@ namespace EngiShotgu
 
 		public void Awake()
 		{
-			R2API.ContentAddition.AddEntityState<EnterReload>(out _);
-			R2API.ContentAddition.AddEntityState<Reload>(out _);
+			//R2API.ContentAddition.AddEntityState<EnterReload>(out _);
+			//R2API.ContentAddition.AddEntityState<Reload>(out _);
 			LoadAssetBundle();
 			this.SetupProjectiles();
 			SkillLocator component = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiBody").GetComponent<SkillLocator>();
 			SkillFamily skillFamily = component.primary.skillFamily;
 			SkillFamily skillFamily2 = component.secondary.skillFamily;
 
-			R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
+			//R2API.ContentAddition.AddEntityState<GaussShotgun>(out _);
 			ReloadSkillDef reloadSkillDef = ScriptableObject.CreateInstance<ReloadSkillDef>();
-
-			reloadSkillDef.icon = gaussShotgunIconS;
 			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(GaussShotgun));
-			reloadSkillDef.activationStateMachineName = "Weapon";
-			reloadSkillDef.baseMaxStock = this.stock;
 			reloadSkillDef.baseRechargeInterval = 0f;
-			reloadSkillDef.dontAllowPastMaxStocks = true;
-			reloadSkillDef.beginSkillCooldownOnSkillEnd = false;
-			reloadSkillDef.canceledFromSprinting = false;
-			reloadSkillDef.fullRestockOnAssign = true;
-			reloadSkillDef.interruptPriority = InterruptPriority.Skill;
-			reloadSkillDef.keywordTokens = new string[0];
-			reloadSkillDef.resetCooldownTimerOnUse = true;
-			reloadSkillDef.mustKeyPress = false;
-			reloadSkillDef.isCombatSkill = true;
-			reloadSkillDef.cancelSprintingOnActivation = true;
-			reloadSkillDef.forceSprintDuringState = false;
-			reloadSkillDef.rechargeStock = 0;
-			reloadSkillDef.requiredStock = 1;
+			reloadSkillDef.baseMaxStock = this.stock;
+			reloadSkillDef.rechargeStock = 1;
 			reloadSkillDef.skillDescriptionToken = "Fire a close-range blast of pellets, dealing <style=cIsDamage>8x60% damage</style>. Holds 8 total rounds.";
 			reloadSkillDef.skillName = "EngiShotgun";
 			reloadSkillDef.skillNameToken = "Gauss Scatter";
+			reloadSkillDef.activationStateMachineName = "Weapon";
+			reloadSkillDef.beginSkillCooldownOnSkillEnd = false;
+			reloadSkillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
+			reloadSkillDef.isCombatSkill = true;
+			reloadSkillDef.cancelSprintingOnActivation = true;
+			reloadSkillDef.canceledFromSprinting = false;
+			reloadSkillDef.mustKeyPress = false;
+			reloadSkillDef.icon = gaussShotgunIconS;
+			reloadSkillDef.requiredStock = 1;
 			reloadSkillDef.stockToConsume = 1;
-			reloadSkillDef.graceDuration = 0.3f;
-			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(EntityStates.Engi.EngiWeapon.Reload.Reload));
 			reloadSkillDef.reloadInterruptPriority = InterruptPriority.Any;
+			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(EnterReload));
+			reloadSkillDef.graceDuration = 0.5f;
 			Array.Resize<SkillFamily.Variant>(ref skillFamily.variants, skillFamily.variants.Length + 1);
 			SkillFamily.Variant[] variants = skillFamily.variants;
 			int num = skillFamily.variants.Length - 1;
@@ -113,7 +106,52 @@ namespace EngiShotgu
 			variant.unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
 			variant.viewableNode = new ViewablesCatalog.Node(reloadSkillDef.skillNameToken, false, null);
 			variants[num] = variant;
+/*
+			#region Blast
+			primaryBlastDef = ReloadSkillDef.CreateInstance<ReloadSkillDef>();
+			primaryBlastDef.activationState = new SerializableEntityStateType(typeof(Blast));
+			primaryBlastDef.baseRechargeInterval = 0f;
+			if (!Blast.noReload)
+			{
+				primaryBlastDef.baseMaxStock = blastStock;
+				primaryBlastDef.rechargeStock = 0;
+			}
+			else
+			{
+				primaryBlastDef.baseRechargeInterval = 0f;
+				primaryBlastDef.baseMaxStock = 1;
+				primaryBlastDef.rechargeStock = 1;
+			}
+			primaryBlastDef.skillDescriptionToken = "";
+			primaryBlastDef.skillDescriptionToken += "Fire a slug " + (Blast.penetrateEnemies ? "that pierces " : "") + "for <style=cIsDamage>" + Blast.damageCoefficient.ToString("P0").Replace(" ", "").Replace(",", "") + " damage</style>.";
+			if (primaryBlastDef.baseRechargeInterval > 0f)
+			{
+				primaryBlastDef.skillDescriptionToken += " Can hold up to " + primaryBlastDef.baseMaxStock + " bullets.";
+			}
+			primaryBlastDef.skillDescriptionToken += Environment.NewLine;
 
+			primaryBlastDef.skillName = "FireSlug";
+			primaryBlastDef.skillNameToken = "BANDITRELOADED_PRIMARY_NAME";
+			primaryBlastDef.activationStateMachineName = "Weapon";
+			primaryBlastDef.beginSkillCooldownOnSkillEnd = false;
+
+			primaryBlastDef.isCombatSkill = true;
+			primaryBlastDef.cancelSprintingOnActivation = true;
+			primaryBlastDef.canceledFromSprinting = false;
+			primaryBlastDef.mustKeyPress = false;
+			primaryBlastDef.icon = ModContentPack.assets.LoadAsset<Sprite>("skill1.png");
+
+
+
+
+			primaryBlastDef.reloadInterruptPriority = InterruptPriority.Any;
+			primaryBlastDef.reloadState = new SerializableEntityStateType(typeof(EntityStates.Bandit2.Weapon.EnterReload));
+			primaryBlastDef.graceDuration = 0.5f;
+
+			ModContentPack.skillDefs.Add(primaryBlastDef);
+			#endregion
+
+			*/
 
 
 

@@ -3,18 +3,18 @@ using UnityEngine;
 using BepInEx;
 
 namespace EntityStates.Engi.EngiWeapon.Reload
+
 {
     // Token: 0x02000479 RID: 1145
     public class Reload : BaseState
     {
         // Token: 0x1700012E RID: 302
         // (get) Token: 0x0600147D RID: 5245 RVA: 0x0005B2FC File Offset: 0x000594FC
-        public float reloadtime = 0.75f;
         private float duration
         {
             get
             {
-                return reloadtime / this.attackSpeedStat;
+                return Reload.baseDuration / this.attackSpeedStat;
             }
         }
 
@@ -23,8 +23,8 @@ namespace EntityStates.Engi.EngiWeapon.Reload
         {
             base.OnEnter();
             base.PlayAnimation("Gesture, Additive", (base.characterBody.isSprinting && base.characterMotor && base.characterMotor.isGrounded) ? "ReloadSimple" : "ChargeGrenades", "Reload.playbackRate", this.duration);
-            Util.PlayAttackSpeedSound(enterSoundString, base.gameObject, enterSoundPitch);
-            EffectManager.SimpleMuzzleFlash(reloadEffectPrefab, base.gameObject, reloadEffectMuzzleString, false);
+            Util.PlayAttackSpeedSound(Reload.enterSoundString, base.gameObject, Reload.enterSoundPitch);
+            EffectManager.SimpleMuzzleFlash(Reload.reloadEffectPrefab, base.gameObject, Reload.reloadEffectMuzzleString, false);
         }
 
         // Token: 0x0600147F RID: 5247 RVA: 0x0005B394 File Offset: 0x00059594
@@ -44,13 +44,14 @@ namespace EntityStates.Engi.EngiWeapon.Reload
                 this.outer.SetNextState(new Reload());
                 return;
             }
-            Util.PlayAttackSpeedSound(exitSoundString, base.gameObject, exitSoundPitch);
+            Util.PlaySound(ChargeGrenades.chargeStockSoundString, base.gameObject);
             this.outer.SetNextStateToMain();
         }
 
         // Token: 0x06001480 RID: 5248 RVA: 0x0000EBED File Offset: 0x0000CDED
         public override void OnExit()
         {
+            Util.PlaySound(ChargeGrenades.chargeLoopStopSoundString, base.gameObject);
             base.OnExit();
         }
 
@@ -68,7 +69,7 @@ namespace EntityStates.Engi.EngiWeapon.Reload
         // Token: 0x06001482 RID: 5250 RVA: 0x0000B44F File Offset: 0x0000964F
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Any;
+            return InterruptPriority.Skill;
         }
 
         // Token: 0x04001A38 RID: 6712
