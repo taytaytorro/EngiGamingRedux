@@ -21,7 +21,9 @@ namespace EngiShotgu
 {
 	// Token: 0x02000007 RID: 7
 	[BepInDependency("com.bepis.r2api")]
+
 	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.4")]
+
 	[R2APISubmoduleDependency(new string[]
 	{
 		"PrefabAPI",
@@ -49,7 +51,9 @@ namespace EngiShotgu
 			{
 
 				string dir = System.IO.Path.GetDirectoryName(Info.Location);
+
 				assetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(PInfo.Location, "..", "icons"));
+
 				load = assetBundle;
 				Logger.LogMessage("loaded");
 			}
