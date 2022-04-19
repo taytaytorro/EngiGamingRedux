@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,65 +6,87 @@
 
   <ItemGroup>
     <Compile Remove="EngiShotgun\**" />
+    <Compile Remove="Old\**" />
     <Compile Remove="Properties\**" />
     <Compile Remove="SneedUtils\**" />
     <EmbeddedResource Remove="EngiShotgun\**" />
+    <EmbeddedResource Remove="Old\**" />
     <EmbeddedResource Remove="Properties\**" />
     <EmbeddedResource Remove="SneedUtils\**" />
     <None Remove="EngiShotgun\**" />
+    <None Remove="Old\**" />
     <None Remove="Properties\**" />
     <None Remove="SneedUtils\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="EngiShotgunRedux\Class1.cs" />
-    <Compile Remove="EntityStates\Engi\EngiWeapon\Rux1\Class1.cs" />
+    <PackageReference Include="BepInEx.Analyzers" Version="1.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BepInEx.Core" Version="5.4.19" />
+    <PackageReference Include="R2API" Version="4.3.5" />
+    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.2-r.0" />
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="EngiShotgunRedux\VS_FileCompare.cmd" />
-    <None Remove="EntityStates\Engi\EngiWeapon\Rux1\VS_FileCompare.cmd" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="BepInEx">
-      <HintPath>..\..\..\..\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\testing\BepInEx\core\BepInEx.dll</HintPath>
+    <Reference Include="Facepunch.Steamworks">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\Facepunch.Steamworks.dll</HintPath>
     </Reference>
-    <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+    <Reference Include="KdTreeLib">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\KdTreeLib.dll</HintPath>
     </Reference>
     <Reference Include="KinematicCharacterController">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\KinematicCharacterController.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\KinematicCharacterController.dll</HintPath>
     </Reference>
-    <Reference Include="LegacyResourcesAPI">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\LegacyResourcesAPI.dll</HintPath>
+    <Reference Include="MMHOOK_RoR2">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\MMHOOK_RoR2.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="pb_Stl">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\pb_Stl.dll</HintPath>
+    </Reference>
+    <Reference Include="Poly2Tri">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\Poly2Tri.dll</HintPath>
+    </Reference>
+    <Reference Include="ProBuilderCore">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\ProBuilderCore.dll</HintPath>
+    </Reference>
+    <Reference Include="ProBuilderMeshOps">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\ProBuilderMeshOps.dll</HintPath>
     </Reference>
     <Reference Include="R2API">
-      <HintPath>..\..\..\..\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\testing\BepInEx\plugins\tristanmcpherson-R2API\R2API\R2API.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\R2API.dll</HintPath>
     </Reference>
-    <Reference Include="RoR2">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\RoR2.dll</HintPath>
+    <Reference Include="Rewired_Windows_Lib">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\Rewired_Windows_Lib.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Addressables">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Unity.Addressables.dll</HintPath>
+    <Reference Include="SimpleJSON">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\SimpleJSON.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\bin\Debug\netstandard2.0\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Wwise">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\Wwise.dll</HintPath>
+    </Reference>
+    <Reference Include="Zio">
+      <HintPath>..\..\..\..\..\..\Work Files\Code\RoR2 Modding\Projects\ActiveEngineerEX\EngineerShotgunREDUX\libs\Zio.dll</HintPath>
     </Reference>
   </ItemGroup>
 
