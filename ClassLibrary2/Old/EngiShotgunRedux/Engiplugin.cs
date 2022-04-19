@@ -21,7 +21,9 @@ namespace EngiShotgu
 {
 	// Token: 0x02000007 RID: 7
 	[BepInDependency("com.bepis.r2api")]
-	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.3")]
+
+	[BepInPlugin("com.macawesone.EngiShotgun", "EngiGamingREDUX", "1.0.4")]
+
 	[R2APISubmoduleDependency(new string[]
 	{
 		"PrefabAPI",
@@ -49,7 +51,9 @@ namespace EngiShotgu
 			{
 
 				string dir = System.IO.Path.GetDirectoryName(Info.Location);
-				assetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(PInfo.Location, "..", "AssetBundleStaging", "icons"));
+
+				assetBundle = AssetBundle.LoadFromFile(System.IO.Path.Combine(PInfo.Location, "..", "icons"));
+
 				load = assetBundle;
 				Logger.LogMessage("loaded");
 			}
@@ -129,7 +133,7 @@ namespace EngiShotgu
 			skillDef.requiredStock = 1;
 			skillDef.stockToConsume = 1;
 			skillDef.icon = plasmaGrenadeIconS;
-			skillDef.skillDescriptionToken = "Take aim and throw a plasma grenade that deals 500% damage on impact, and leaves a lingering pool of <slowing> plasma that deals 100% damage per second. Can hold up to 2.";
+			skillDef.skillDescriptionToken = "Take aim and throw a plasma grenade that deals <style=cIsDamage>500% damage</style> on impact, and leaves a lingering pool of <style=cIsDamage>slowing</style> plasma that deals <style=cIsDamage>100% damage per second</style>. Can hold up to 2.";
 			skillDef.skillName = "PlasmaGrenade";
 			skillDef.skillNameToken = "Plasma Grenade";
 			ContentAddition.AddSkillDef(skillDef);
