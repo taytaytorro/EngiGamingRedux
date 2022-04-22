@@ -30,7 +30,8 @@ namespace EngiShotgun
 			shotgunStock = config.Bind<int>("Gauss Shotgun", "Max Ammo", 8, "The maximum amount of ammo in a shotgun magazine.");
         }
 		private static void AddDef()
-        {
+		{
+			R2API.ContentAddition.AddEntityState<weapon.PlasmaGrenades>(out _);
 			reloadSkillDef = UnityEngine.ScriptableObject.CreateInstance<ReloadSkillDef>();
 			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(weapon.EngiShotgun));
 			reloadSkillDef.baseMaxStock = shotgunStock.Value;
@@ -52,6 +53,7 @@ namespace EngiShotgun
 			reloadSkillDef.reloadInterruptPriority = InterruptPriority.Any;
 			reloadSkillDef.reloadState = new SerializableEntityStateType(typeof(weapon.Reload));
 			reloadSkillDef.graceDuration = 0.5f;
+			ContentAddition.AddSkillDef(reloadSkillDef);
 		}
 		public static void Init(ConfigFile config)
         {

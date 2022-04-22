@@ -18,10 +18,12 @@ namespace EngiShotgun
 
 		public static ConfigEntry<int> stockSize;
 		public static ConfigEntry<float> cooldown;
+
+		public static string configPrefix = "Plasma Grenade";
 		public static void AddConfig(ConfigFile config)
         {
-			stockSize = config.Bind<int>("Plasma Grenade", "Stock Size", 2, "The default number of grenades which can be held.");
-			cooldown = config.Bind<float>("Plasma Grenade", "Ability Cooldown", 8f, "Seconds before a single grenade recharges.");
+			stockSize = config.Bind<int>(configPrefix, "Stock Size", 2, "The default number of grenades which can be held.");
+			cooldown = config.Bind<float>(configPrefix, "Ability Cooldown", 8f, "Seconds before a single grenade recharges.");
         }
 		private static void AddLanguage()
 		{
