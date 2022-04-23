@@ -2,6 +2,7 @@
 using UnityEngine;
 using BepInEx;
 using BepInEx.Configuration;
+using EngiShotgun;
 
 namespace EntityStates.Engi.EngiWeapon
 
@@ -9,18 +10,20 @@ namespace EntityStates.Engi.EngiWeapon
     // Token: 0x02000479 RID: 1145
     public class Reload : BaseState
     {
+        static string configPrefix = EngiShotgunDef.configPrefix;
+
         // Token: 0x04001A3E RID: 6718
         public static ConfigEntry<float> baseDuration;
 
         public static void Init(ConfigFile config)
         {
-            baseDuration = config.Bind<float>("Other", "Reload Speed", 3, "Reload Duration of the Gauss Shotgun");
+            baseDuration = config.Bind<float>(configPrefix, "Reload Speed", 2, "Reload Duration of the Gauss Shotgun");
         }
         // Token: 0x1700012E RID: 302
         // (get) Token: 0x0600147D RID: 5245 RVA: 0x0005B2FC File Offset: 0x000594FC
         private float duration
         {
-            get => baseDuration.Value / this.attackSpeedStat;
+            get => baseDuration.Value / attackSpeedStat;
         }
 
         // Token: 0x0600147E RID: 5246 RVA: 0x0005B30C File Offset: 0x0005950C

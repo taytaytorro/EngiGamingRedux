@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 548837547
+CRC: 2202490345
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: engishotgunassets
+      Name: engineerassets
       Dependencies: {}

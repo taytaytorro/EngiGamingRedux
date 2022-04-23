@@ -24,12 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="EngineerShotgunREDUX" />
     <None Remove="engishotgunassets" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="EngineerShotgunREDUX" />
     <EmbeddedResource Include="engishotgunassets" />
   </ItemGroup>
 

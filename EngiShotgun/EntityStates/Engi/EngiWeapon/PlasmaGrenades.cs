@@ -25,7 +25,7 @@ namespace EntityStates.Engi.EngiWeapon
 			damageCoeff = config.Bind<int>(configPrefix, "Projectile Damage%", 500, "The base damage of each plasma grenade, in %");
 			procCoefficient = config.Bind<float>(configPrefix, "Proc Coefficient", 1, "The multiplier for plasma grenade procs.");
 			poolLifetime = config.Bind<float>(configPrefix, "Plasma Lifetime", 5f, "The lifetime, in seconds,of each grenade's plasma pool.");
-			glowAmount = config.Bind(configPrefix, "Plasma Glow", 10f, "The power of the Plasma Pool's glow.");
+			glowAmount = config.Bind(configPrefix, "Plasma Glow", 15f, "The power of the Plasma Pool's glow.");
 		}
 		public static void Init(ConfigFile config)
         {
@@ -60,9 +60,25 @@ namespace EntityStates.Engi.EngiWeapon
 			//get components
 			plasmaGrenadeObject.GetComponent<ProjectileController>().ghostPrefab = plasmaGhostObject;
 			ProjectileDamage damageComponent = poolObject.GetComponent<ProjectileDamage>();
-			EffectComponent effect = effectObject.GetComponent<EffectComponent>();
 			ProjectileImpactExplosion plasmaBlast = plasmaGrenadeObject.GetComponent<ProjectileImpactExplosion>();
-			ProjectileDotZone plasmaPool = poolObject.GetComponent<ProjectileDotZone>();
+
+			//reassign DOT to network-compatible 
+			var oldDOT = poolObject.GetComponent<ProjectileDotZone>();
+			PlasmaDOTZone plasmaPool = poolObject.AddComponent<PlasmaDOTZone>();
+
+			//value copying
+			plasmaPool.impactEffect = effectObject;
+			plasmaPool.onEnd = oldDOT.onEnd;
+			plasmaPool.attackerFiltering = 0;
+			plasmaPool.overlapProcCoefficient = 0.15f * procCoefficient.Value;
+			plasmaPool.fireFrequency = 1f;
+			plasmaPool.resetFrequency = 20f;
+			plasmaPool.lifetime = poolLifetime.Value;
+			plasmaPool.damageCoefficient = damageCoeff.Value * 0.1f * plasmaPool.fireFrequency;
+
+			//destroy network-incompat DOT
+			Destroy(oldDOT);
+
 
 			//damage values
 			plasmaGrenadeObject.GetComponent<ProjectileDamage>().damageType = DamageType.SlowOnHit;
@@ -71,18 +87,12 @@ namespace EntityStates.Engi.EngiWeapon
 			damageComponent.force = 30f;
 
 			//plasma pool values
-			poolObject.GetComponentInChildren<AnimateShaderAlpha>().enabled = true;
 			var light = poolObject.GetComponentInChildren<Light>();
 			light.color = Color.cyan;
 			light.intensity = light.range = glowAmount.Value;
 			//decal values
 			var decal = poolObject.GetComponentInChildren<ThreeEyedGames.Decal>();
 			decal.Material.SetColor("_Color", Color.cyan);
-			plasmaPool.attackerFiltering = 0;
-			plasmaPool.overlapProcCoefficient = 0.15f * procCoefficient.Value;
-			plasmaPool.fireFrequency = 0.1f;
-			plasmaPool.lifetime = poolLifetime.Value;
-			plasmaPool.damageCoefficient = damageCoeff.Value * 0.1f * plasmaPool.fireFrequency;
 
 			//plasma blast values
 			plasmaBlast.blastRadius = 5.00f;

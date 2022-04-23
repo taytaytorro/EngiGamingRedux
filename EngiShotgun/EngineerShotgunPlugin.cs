@@ -26,7 +26,7 @@ namespace EngiShotgun
 
         private void LoadAssetBundle()
         {
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ShotgunengiREDUX.engishotgunassets"))
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Assets.engineerassets"))
             {
                 MainAssets = AssetBundle.LoadFromStream(stream);
             }

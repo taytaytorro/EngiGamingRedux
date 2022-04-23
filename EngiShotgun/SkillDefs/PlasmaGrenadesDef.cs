@@ -54,7 +54,7 @@ namespace EngiShotgun
 			skillDef.fullRestockOnAssign = false;
 			skillDef.interruptPriority = InterruptPriority.Skill;
 			skillDef.isCombatSkill = true;
-			skillDef.mustKeyPress = false;
+			skillDef.mustKeyPress = true;
 			skillDef.cancelSprintingOnActivation = false;
 			skillDef.forceSprintDuringState = false;
 			skillDef.rechargeStock = 1;

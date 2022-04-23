@@ -16,6 +16,8 @@ namespace EngiShotgun
 		static ReloadSkillDef reloadSkillDef;
 		public static UnityEngine.Sprite skillSprite = MainAssets.LoadAsset<UnityEngine.Sprite>("GaussShotgun");
 
+		public static string configPrefix = "Gauss Shotgun";
+
 		private static void AddLanguage()
 		{
 			LanguageAPI.Add("ENGIPLUS_ENGISHOTGUN_NAME", "EngiShotgun");
@@ -27,11 +29,12 @@ namespace EngiShotgun
 
 		private static void AddConfig(ConfigFile config)
         {
-			shotgunStock = config.Bind<int>("Gauss Shotgun", "Max Ammo", 8, "The maximum amount of ammo in a shotgun magazine.");
+
+			shotgunStock = config.Bind<int>(configPrefix, "Max Ammo", 8, "The maximum amount of ammo in a shotgun magazine.");
         }
 		private static void AddDef()
 		{
-			R2API.ContentAddition.AddEntityState<weapon.PlasmaGrenades>(out _);
+			R2API.ContentAddition.AddEntityState<weapon.EngiShotgun>(out _);
 			reloadSkillDef = UnityEngine.ScriptableObject.CreateInstance<ReloadSkillDef>();
 			reloadSkillDef.activationState = new SerializableEntityStateType(typeof(weapon.EngiShotgun));
 			reloadSkillDef.baseMaxStock = shotgunStock.Value;
