@@ -8,6 +8,10 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="EngiShotgun\**" />
     <Compile Remove="Old\**" />
@@ -21,14 +25,6 @@
     <None Remove="Old\**" />
     <None Remove="Properties\**" />
     <None Remove="SneedUtils\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="engishotgunassets" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="engishotgunassets" />
   </ItemGroup>
 
   <ItemGroup>

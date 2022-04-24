@@ -30,7 +30,7 @@ namespace EntityStates.Engi.EngiWeapon
         public override void OnEnter()
         {
             base.OnEnter();
-            PlayAnimation("Gesture, Additive", (characterBody.isSprinting && characterMotor && characterMotor.isGrounded) ? "ReloadSimple" : "ChargeGrenades", "Reload.playbackRate", duration);
+            PlayAnimation("Gesture, Additive", (!characterBody.isSprinting && characterMotor && characterMotor.isGrounded) ? "ReloadSimple" : "ChargeGrenades", "Reload.playbackRate", duration);
             Util.PlayAttackSpeedSound(enterSoundString, gameObject, enterSoundPitch);
             EffectManager.SimpleMuzzleFlash(reloadEffectPrefab, gameObject, reloadEffectMuzzleString, false);
         }

@@ -4,6 +4,7 @@ using R2API.Utils;
 using RoR2;
 using System.Reflection;
 using UnityEngine;
+using Path = System.IO.Path;
 
 namespace EngiShotgun
 {
@@ -13,23 +14,33 @@ namespace EngiShotgun
     {
         nameof(LoadoutAPI),
         nameof(ContentAddition),
-        nameof(LanguageAPI)
+        nameof(LanguageAPI),
+        nameof(PrefabAPI)
     })]
     public class EngineerShotgunPlugin : BepInEx.BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource ModLogger;
         public const string PluginName = "Active Engineer EX";
         public const string PluginGUID = "com.macawesone.EngiShotgun";
-        public const string PluginVersion = "3.0.0";
+        public const string PluginVersion = "3.0.2";
 
-        public static AssetBundle MainAssets;
+        private static AssetBundle _mainAssets;
+        public static AssetBundle MainAssets
+        {
+            get
+            {
+                return _mainAssets;
+            }
+            set
+            {
+                _mainAssets = value;
+            }
+        }
 
         private void LoadAssetBundle()
         {
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Assets.engineerassets"))
-            {
-                MainAssets = AssetBundle.LoadFromStream(stream);
-            }
+            var path = Path.GetDirectoryName(Info.Location);
+            MainAssets = AssetBundle.LoadFromFile(Path.Combine(path, "engineerassets"));
         }
         private void EnableSkills()
         {

@@ -14,7 +14,7 @@ namespace EngiShotgun
     public class PlasmaGrenadesDef
     {
 		public static SkillDef skillDef;
-		public static UnityEngine.Sprite skillSprite = MainAssets.LoadAsset<UnityEngine.Sprite>("PlasmaGrenades");
+		public static UnityEngine.Sprite skillSprite => MainAssets.LoadAsset<UnityEngine.Sprite>("PlasmaGrenades");
 
 		public static ConfigEntry<int> stockSize;
 		public static ConfigEntry<float> cooldown;
@@ -30,7 +30,7 @@ namespace EngiShotgun
 			LanguageAPI.Add("ENGIPLUS_PLASMAGRENADES_NAME", "PlasmaGrenade");
 			LanguageAPI.Add("ENGIPLUS_PLASMAGRENADES_DESCRIPTION", $"Take aim and throw a plasma grenade that deals <style=cIsDamage>{weapon.PlasmaGrenades.damageCoeff.Value}% damage</style> on impact, and leaves a lingering pool of <style=cIsUtility>slowing</style> plasma that deals <style=cIsDamage>100% damage per second.</style> Can hold up to {stockSize.Value}.");
 			LanguageAPI.Add("ENGIPLUS_PLASMAGRENADES_NAMETOKEN", "Plasma Grenade");
-			LanguageAPI.Add("ENGIPLUS_KEYWORD_SLOWING", "Slows enemies caught in the effect radius.");
+			LanguageAPI.Add("ENGIPLUS_KEYWORD_SLOWING", "<style=cKeywordName>Slowing</style>Slows enemies caught in the effect radius.");
 
 		}
 		public static void Init(ConfigFile config)
@@ -43,9 +43,9 @@ namespace EngiShotgun
         }
 		private static void AddDef()
 		{
-			R2API.ContentAddition.AddEntityState<weapon.PlasmaGrenades>(out _);
+			SerializableEntityStateType plasmaGrenadeState = R2API.ContentAddition.AddEntityState<weapon.PlasmaGrenades>(out _);
 			skillDef = UnityEngine.ScriptableObject.CreateInstance<SkillDef>();
-			skillDef.activationState = new SerializableEntityStateType(typeof(weapon.PlasmaGrenades));
+			skillDef.activationState = plasmaGrenadeState;
 			skillDef.activationStateMachineName = "Weapon";
 			skillDef.baseMaxStock = stockSize.Value;
 			skillDef.baseRechargeInterval = cooldown.Value;
@@ -55,7 +55,7 @@ namespace EngiShotgun
 			skillDef.interruptPriority = InterruptPriority.Skill;
 			skillDef.isCombatSkill = true;
 			skillDef.mustKeyPress = true;
-			skillDef.cancelSprintingOnActivation = false;
+			skillDef.cancelSprintingOnActivation = true;
 			skillDef.forceSprintDuringState = false;
 			skillDef.rechargeStock = 1;
 			skillDef.requiredStock = 1;

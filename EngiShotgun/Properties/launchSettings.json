@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ShotgunengiREDUX": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

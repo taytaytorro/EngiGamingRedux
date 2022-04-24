@@ -59,6 +59,7 @@ namespace EntityStates.Engi.EngiWeapon
 
 			//get components
 			plasmaGrenadeObject.GetComponent<ProjectileController>().ghostPrefab = plasmaGhostObject;
+			plasmaGrenadeObject.GetComponent<Rigidbody>().useGravity = true;
 			ProjectileDamage damageComponent = poolObject.GetComponent<ProjectileDamage>();
 			ProjectileImpactExplosion plasmaBlast = plasmaGrenadeObject.GetComponent<ProjectileImpactExplosion>();
 
@@ -71,10 +72,10 @@ namespace EntityStates.Engi.EngiWeapon
 			plasmaPool.onEnd = oldDOT.onEnd;
 			plasmaPool.attackerFiltering = 0;
 			plasmaPool.overlapProcCoefficient = 0.15f * procCoefficient.Value;
-			plasmaPool.fireFrequency = 1f;
+			plasmaPool.fireFrequency = 5f;
 			plasmaPool.resetFrequency = 20f;
 			plasmaPool.lifetime = poolLifetime.Value;
-			plasmaPool.damageCoefficient = damageCoeff.Value * 0.1f * plasmaPool.fireFrequency;
+			plasmaPool.damageCoefficient = damageCoeff.Value * 0.02f / (plasmaPool.fireFrequency * plasmaPool.resetFrequency);
 
 			//destroy network-incompat DOT
 			Destroy(oldDOT);
