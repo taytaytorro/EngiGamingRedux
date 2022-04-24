@@ -18,7 +18,7 @@ namespace ShotgunengiREDUX.SkillDefs
 	{
 		public static GaussShotgun_SkillDef instance;
 		static HorizontalLayoutGroup stockGroup;
-		static int ShotgunStock => EngiShotgunDef.shotgunStock.Value;
+		static int ShotgunStock => EngiShotgunSlot.shotgunStock.Value;
 
 		private static GameObject _crosshairPrefab;
 		private static GameObject CrosshairPrefab
@@ -45,7 +45,7 @@ namespace ShotgunengiREDUX.SkillDefs
 			newDisplays[1] = displays[1];
 
 
-			var min = Mathf.Min(ShotgunStock, EngiShotgunDef.maxVisibleStocks.Value);
+			var min = Mathf.Min(ShotgunStock, EngiShotgunSlot.maxVisibleStocks.Value);
 			Debug.LogWarning($"Up to {min} stocks will be shown.");
 			//Shotgun stock is 8
 			//Max visible stock is 10

@@ -11,7 +11,7 @@ using static EngiShotgun.EngineerShotgunPlugin;
 
 namespace EngiShotgun
 {
-    public class PlasmaGrenadesDef
+    public class PlasmaGrenadesSlot
     {
 		public static SkillDef skillDef;
 		public static UnityEngine.Sprite skillSprite => MainAssets.LoadAsset<UnityEngine.Sprite>("PlasmaGrenades");

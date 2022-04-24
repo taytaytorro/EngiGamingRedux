@@ -2,6 +2,7 @@ using BepInEx;
 using R2API;
 using R2API.Utils;
 using RoR2;
+using ShotgunengiREDUX.SkillDefs;
 using System.Reflection;
 using UnityEngine;
 using Path = System.IO.Path;
@@ -15,7 +16,8 @@ namespace EngiShotgun
         nameof(LoadoutAPI),
         nameof(ContentAddition),
         nameof(LanguageAPI),
-        nameof(PrefabAPI)
+        nameof(PrefabAPI),
+        nameof(RecalculateStatsAPI)
     })]
     public class EngineerShotgunPlugin : BepInEx.BaseUnityPlugin
     {
@@ -44,8 +46,9 @@ namespace EngiShotgun
         }
         private void EnableSkills()
         {
-            EngiShotgunDef.Init(Config);
-            PlasmaGrenadesDef.Init(Config);
+            EngiShotgunSlot.Init(Config);
+            PlasmaGrenadesSlot.Init(Config);
+            JetpackSlot.Init(Config);
         }
         public void Awake()
         {

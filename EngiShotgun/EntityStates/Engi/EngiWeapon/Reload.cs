@@ -10,7 +10,7 @@ namespace EntityStates.Engi.EngiWeapon
     // Token: 0x02000479 RID: 1145
     public class Reload : BaseState
     {
-        static string configPrefix = EngiShotgunDef.configPrefix;
+        static string configPrefix = EngiShotgunSlot.configPrefix;
 
         // Token: 0x04001A3E RID: 6718
         public static ConfigEntry<float> baseDuration;

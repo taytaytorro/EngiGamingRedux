@@ -18,7 +18,7 @@ namespace EntityStates.Engi.EngiWeapon
 		public static ConfigEntry<int> maxDist;
 		public static ConfigEntry<int> damageCoeff;
 		public static ConfigEntry<float> glowAmount;
-		static string configPrefix = PlasmaGrenadesDef.configPrefix;
+		static string configPrefix = PlasmaGrenadesSlot.configPrefix;
 		public static void AddConfig(ConfigFile config)
         {
 			maxDist = config.Bind<int>(configPrefix, "Max Distance", 60, "The maximum distance a grenade can travel.");

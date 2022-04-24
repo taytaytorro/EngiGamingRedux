@@ -16,7 +16,7 @@ namespace EntityStates.Engi.EngiWeapon
 {
 	public class EngiShotgun : BaseState
 	{
-		static readonly string configPrefix = EngiShotgunDef.configPrefix;
+		static readonly string configPrefix = EngiShotgunSlot.configPrefix;
 		public static ConfigEntry<float> minSpread;
 		public static ConfigEntry<float> maxSpread;
 		public static ConfigEntry<float> procCoefficient;
@@ -78,7 +78,7 @@ namespace EntityStates.Engi.EngiWeapon
 					bulletCount = bulletCountLoad,
 					aimVector = aimRay.direction,
 					origin = aimRay.origin,
-					damage = EngiShotgunDef.damageCoeff.Value * damageStat * 0.01f,
+					damage = EngiShotgunSlot.damageCoeff.Value * damageStat * 0.01f,
 
 					damageColorIndex = DamageColorIndex.Default,
 					damageType = DamageType.Generic,

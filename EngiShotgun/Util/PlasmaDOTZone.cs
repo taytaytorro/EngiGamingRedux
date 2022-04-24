@@ -13,33 +13,33 @@ namespace RoR2.Projectile
 		// Token: 0x0600433A RID: 17210 RVA: 0x001169C0 File Offset: 0x00114BC0
 		private void Start()
 		{
-			this.projectileController = base.GetComponent<ProjectileController>();
-			this.projectileDamage = base.GetComponent<ProjectileDamage>();
-			this.ResetOverlap();
-			this.onBegin.Invoke();
-			if (!string.IsNullOrEmpty(this.soundLoopString))
+			projectileController = base.GetComponent<ProjectileController>();
+			projectileDamage = base.GetComponent<ProjectileDamage>();
+			ResetOverlap();
+			onBegin.Invoke();
+			if (!string.IsNullOrEmpty(soundLoopString))
 			{
-				Util.PlaySound(this.soundLoopString, base.gameObject);
+				Util.PlaySound(soundLoopString, base.gameObject);
 			}
 		}
 
 		// Token: 0x0600433B RID: 17211 RVA: 0x00116A18 File Offset: 0x00114C18
 		private void ResetOverlap()
 		{
-			this.attack = new OverlapAttack();
-			this.attack.procChainMask = this.projectileController.procChainMask;
-			this.attack.procCoefficient = this.projectileController.procCoefficient * this.overlapProcCoefficient;
-			this.attack.attacker = this.projectileController.owner;
-			this.attack.inflictor = base.gameObject;
-			this.attack.teamIndex = this.projectileController.teamFilter.teamIndex;
-			this.attack.attackerFiltering = this.attackerFiltering;
-			this.attack.damage = this.damageCoefficient * this.projectileDamage.damage;
-			this.attack.forceVector = this.forceVector + this.projectileDamage.force * base.transform.forward;
-			this.attack.hitEffectPrefab = this.impactEffect;
-			this.attack.isCrit = this.projectileDamage.crit;
-			this.attack.damageColorIndex = this.projectileDamage.damageColorIndex;
-			this.attack.damageType = this.projectileDamage.damageType;
-			this.attack.hitBoxGroup = base.GetComponent<HitBoxGroup>();
+			attack = new OverlapAttack();
+			attack.procChainMask = projectileController.procChainMask;
+			attack.procCoefficient = projectileController.procCoefficient * overlapProcCoefficient;
+			attack.attacker = projectileController.owner;
+			attack.inflictor = base.gameObject;
+			attack.teamIndex = projectileController.teamFilter.teamIndex;
+			attack.attackerFiltering = attackerFiltering;
+			attack.damage = damageCoefficient * projectileDamage.damage;
+			attack.forceVector = forceVector + projectileDamage.force * base.transform.forward;
+			attack.hitEffectPrefab = impactEffect;
+			attack.isCrit = projectileDamage.crit;
+			attack.damageColorIndex = projectileDamage.damageColorIndex;
+			attack.damageType = projectileDamage.damageType;
+			attack.hitBoxGroup = base.GetComponent<HitBoxGroup>();
 		}
 
 		// Token: 0x0600433C RID: 17212 RVA: 0x000026ED File Offset: 0x000008ED
@@ -50,28 +50,28 @@ namespace RoR2.Projectile
 		// Token: 0x0600433D RID: 17213 RVA: 0x00116B68 File Offset: 0x00114D68
 		public void FixedUpdate()
 		{
-			this.totalStopwatch += Time.fixedDeltaTime;
+			totalStopwatch += Time.fixedDeltaTime;
 			if (NetworkServer.active)
 			{
-				this.resetStopwatch += Time.fixedDeltaTime;
-				this.fireStopwatch += Time.fixedDeltaTime;
-				if (this.resetStopwatch >= 1f / this.resetFrequency)
+				resetStopwatch += Time.fixedDeltaTime;
+				fireStopwatch += Time.fixedDeltaTime;
+				if (resetStopwatch >= 1f / resetFrequency)
 				{
-					this.ResetOverlap();
-					this.resetStopwatch -= 1f / this.resetFrequency;
+					ResetOverlap();
+					resetStopwatch -= 1f / resetFrequency;
 				}
-				if (this.fireStopwatch >= 1f / this.fireFrequency)
+				if (fireStopwatch >= 1f / fireFrequency)
 				{
-					this.attack.Fire(null);
-					this.fireStopwatch -= 1f / this.fireFrequency;
+					attack.Fire(null);
+					fireStopwatch -= 1f / fireFrequency;
 				}
 			}
-			if (this.lifetime > 0f && this.totalStopwatch >= this.lifetime)
+			if (lifetime > 0f && totalStopwatch >= lifetime)
 			{
-				this.onEnd.Invoke();
-				if (!string.IsNullOrEmpty(this.soundLoopStopString))
+				onEnd.Invoke();
+				if (!string.IsNullOrEmpty(soundLoopStopString))
 				{
-					Util.PlaySound(this.soundLoopStopString, base.gameObject);
+					Util.PlaySound(soundLoopStopString, base.gameObject);
 				}
 				UnityEngine.Object.Destroy(base.gameObject);
 			}

@@ -12,7 +12,7 @@ using ShotgunengiREDUX.SkillDefs;
 
 namespace EngiShotgun
 {
-    public class EngiShotgunDef
+    public class EngiShotgunSlot
 	{
 		static GaussShotgun_SkillDef gaussSkillDef;
 		public static UnityEngine.Sprite skillSprite => MainAssets.LoadAsset<UnityEngine.Sprite>("GaussShotgun");
@@ -49,7 +49,7 @@ namespace EngiShotgun
 			gaussSkillDef.skillDescriptionToken = "ENGIPLUS_ENGISHOTGUN_DESCRIPTION";
 			gaussSkillDef.skillName = "ENGIPLUS_ENGISHOTGUN_NAME";
 			gaussSkillDef.skillNameToken = "Gauss Scatter-rifle";
-			gaussSkillDef.activationStateMachineName = "Weapon";
+			gaussSkillDef.activationStateMachineName = "Body";
 			gaussSkillDef.beginSkillCooldownOnSkillEnd = false;
 			gaussSkillDef.fullRestockOnAssign = false;
 			gaussSkillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
