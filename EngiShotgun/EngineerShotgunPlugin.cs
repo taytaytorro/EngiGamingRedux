@@ -24,7 +24,7 @@ namespace EngiShotgun
         public static BepInEx.Logging.ManualLogSource ModLogger;
         public const string PluginName = "Active Engineer EX";
         public const string PluginGUID = "com.macawesone.EngiShotgun";
-        public const string PluginVersion = "3.0.2";
+        public const string PluginVersion = "3.1.0";
 
         private static AssetBundle _mainAssets;
         public static AssetBundle MainAssets

@@ -13,7 +13,7 @@ using EngiShotgun;
 namespace EntityStates.Engi.EngiWeapon
 {
 	// Token: 0x02000005 RID: 5
-	public class PlasmaGrenades : AimThrowableBase
+	public class PlasmaGrenadesState : AimThrowableBase
 	{
 		public static ConfigEntry<int> maxDist;
 		public static ConfigEntry<int> damageCoeff;
@@ -123,11 +123,13 @@ namespace EntityStates.Engi.EngiWeapon
 		// Token: 0x06000017 RID: 23 RVA: 0x000024F0 File Offset: 0x000006F0
 		public override void OnEnter()
 		{
+
 			bool flag = goodState == null;
 			if (flag)
 			{
 				goodState = new AimStunDrone();
 			}
+			setFuse = true;
 			maxDistance = maxDist.Value;
 			rayRadius = 8.51f;
 			arcVisualizerPrefab = goodState.arcVisualizerPrefab;
@@ -142,28 +144,31 @@ namespace EntityStates.Engi.EngiWeapon
 			base.OnEnter();
 		}
 
-		// Token: 0x06000018 RID: 24 RVA: 0x00002598 File Offset: 0x00000798
-		public override void FixedUpdate()
+        public override void FireProjectile()
+        {
+            base.FireProjectile();
+        }
+        public override void FixedUpdate()
 		{
 			base.FixedUpdate();
+			if(isAuthority)
+            {
+				UpdateTrajectoryInfo(out currentTrajectoryInfo);
+            }
 			characterBody.SetAimTimer(0.25f);
 			fixedAge += Time.fixedDeltaTime;
 			bool flag = false;
 			bool flag2 = isAuthority && !KeyIsDown() && fixedAge >= minimumDuration;
-			bool flag3 = flag2;
-			if (flag3)
+			if (flag2)
 			{
 				flag = true;
 			}
 			bool flag4 = characterBody && characterBody.isSprinting;
-			bool flag5 = flag4;
-			if (flag5)
+			if (flag4)
 			{
 				flag = true;
 			}
-			bool flag6 = flag;
-			bool flag7 = flag6;
-			if (flag7)
+			if (flag)
 			{
 				outer.SetNextStateToMain();
 			}

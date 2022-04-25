@@ -28,14 +28,14 @@ namespace EngiShotgun
 		private static void AddLanguage()
 		{
 			LanguageAPI.Add("ENGIPLUS_PLASMAGRENADES_NAME", "PlasmaGrenade");
-			LanguageAPI.Add("ENGIPLUS_PLASMAGRENADES_DESCRIPTION", $"Take aim and throw a plasma grenade that deals <style=cIsDamage>{weapon.PlasmaGrenades.damageCoeff.Value}% damage</style> on impact, and leaves a lingering pool of <style=cIsUtility>slowing</style> plasma that deals <style=cIsDamage>100% damage per second.</style> Can hold up to {stockSize.Value}.");
+			LanguageAPI.Add("ENGIPLUS_PLASMAGRENADES_DESCRIPTION", $"Take aim and throw a plasma grenade that deals <style=cIsDamage>{weapon.PlasmaGrenadesState.damageCoeff.Value}% damage</style> on impact, and leaves a lingering pool of <style=cIsUtility>slowing</style> plasma that deals <style=cIsDamage>100% damage per second.</style> Can hold up to {stockSize.Value}.");
 			LanguageAPI.Add("ENGIPLUS_PLASMAGRENADES_NAMETOKEN", "Plasma Grenade");
 			LanguageAPI.Add("ENGIPLUS_KEYWORD_SLOWING", "<style=cKeywordName>Slowing</style>Slows enemies caught in the effect radius.");
 
 		}
 		public static void Init(ConfigFile config)
 		{
-			weapon.PlasmaGrenades.Init(config);
+			weapon.PlasmaGrenadesState.Init(config);
 			AddConfig(config);
 			AddLanguage();
 			AddDef();
@@ -43,7 +43,7 @@ namespace EngiShotgun
         }
 		private static void AddDef()
 		{
-			SerializableEntityStateType plasmaGrenadeState = R2API.ContentAddition.AddEntityState<weapon.PlasmaGrenades>(out _);
+			SerializableEntityStateType plasmaGrenadeState = R2API.ContentAddition.AddEntityState<weapon.PlasmaGrenadesState>(out _);
 			skillDef = UnityEngine.ScriptableObject.CreateInstance<SkillDef>();
 			skillDef.activationState = plasmaGrenadeState;
 			skillDef.activationStateMachineName = "Weapon";

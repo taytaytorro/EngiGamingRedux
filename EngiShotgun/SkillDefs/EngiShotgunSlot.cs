@@ -41,7 +41,7 @@ namespace EngiShotgun
 		}
 		private static void AddDef()
 		{
-			var GaussShotgunState = R2API.ContentAddition.AddEntityState<weapon.EngiShotgun>(out _);
+			var GaussShotgunState = R2API.ContentAddition.AddEntityState<weapon.GaussShotgunState>(out _);
 			gaussSkillDef = UnityEngine.ScriptableObject.CreateInstance<GaussShotgun_SkillDef>();
 			gaussSkillDef.activationState = GaussShotgunState;
 			gaussSkillDef.baseMaxStock = shotgunStock.Value;
@@ -49,7 +49,7 @@ namespace EngiShotgun
 			gaussSkillDef.skillDescriptionToken = "ENGIPLUS_ENGISHOTGUN_DESCRIPTION";
 			gaussSkillDef.skillName = "ENGIPLUS_ENGISHOTGUN_NAME";
 			gaussSkillDef.skillNameToken = "Gauss Scatter-rifle";
-			gaussSkillDef.activationStateMachineName = "Body";
+			gaussSkillDef.activationStateMachineName = "Weapon";
 			gaussSkillDef.beginSkillCooldownOnSkillEnd = false;
 			gaussSkillDef.fullRestockOnAssign = false;
 			gaussSkillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
@@ -61,7 +61,7 @@ namespace EngiShotgun
 			gaussSkillDef.requiredStock = 1;
 			gaussSkillDef.stockToConsume = 1;
 			gaussSkillDef.reloadInterruptPriority = InterruptPriority.Any;
-			gaussSkillDef.reloadState = new SerializableEntityStateType(typeof(weapon.Reload));
+			gaussSkillDef.reloadState = new SerializableEntityStateType(typeof(weapon.ReloadState));
 			gaussSkillDef.graceDuration = 0.5f;
 			GaussShotgun_SkillDef.instance = gaussSkillDef;
 			ContentAddition.AddSkillDef(gaussSkillDef);
@@ -70,8 +70,8 @@ namespace EngiShotgun
         {
 			AddConfig(config);
 			AddLanguage();
-			weapon.Reload.Init(config);
-			weapon.EngiShotgun.Init(config);
+			weapon.ReloadState.Init(config);
+			weapon.GaussShotgunState.Init(config);
 			AddDef();
 			UpdateSkillFamily();
         }

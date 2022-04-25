@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2680617238
+CRC: 525226338
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e6fd669ee304f7a0327710fd70f361e1
+    Hash: d970bc02ca8cacfe8dfbee7d2d8906b6
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 1267df801cff1bb14fc43a77d693f26b
+    Hash: aa3b9469ebed93e39d65ab79a61893a4
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,6 +25,8 @@ ClassTypes:
   Script: {fileID: -98529514, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
 - Class: 114
   Script: {fileID: -146705984, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 - Class: 222
@@ -37,8 +39,10 @@ Assets:
 - Assets/EngiShotgunTest/GaussShotgun.png
 - Assets/EngiShotgunTest/StockHexIcon.png
 - Assets/EngiShotgunTest/GaussStock.prefab
+- Assets/UI Sprites/UI/Crosshair/texCrosshairUnavailable.png
 - Assets/EngiShotgunTest/JetpackIcon.png
 - Assets/EngiShotgunTest/GaussCrosshair.prefab
 - Assets/EngiShotgunTest/texCrosshairNibHex.png
 - Assets/EngiShotgunTest/PlasmaGrenades.png
+- Assets/EngiShotgunTest/JetpackBuffIcon.png
 Dependencies: []

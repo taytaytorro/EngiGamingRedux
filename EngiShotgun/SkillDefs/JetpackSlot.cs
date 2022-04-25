@@ -13,6 +13,11 @@ namespace ShotgunengiREDUX.SkillDefs
 {
     public class JetpackSlot
     {
+        private static ConfigEntry<float> _speedBoost;
+        public static float SpeedBoost
+        {
+            get => (_speedBoost.Value);
+        }
         static SkillDef jetpackSkillDef;
 
         public static UnityEngine.Sprite skillSprite => MainAssets.LoadAsset<UnityEngine.Sprite>("JetpackIcon");
@@ -21,31 +26,27 @@ namespace ShotgunengiREDUX.SkillDefs
 
         public static ConfigEntry<float> flightDuration;
         public static ConfigEntry<float> skillCooldown;
-        private static ConfigEntry<float> _speedBoost;
-        public static float SpeedBoost
-        {
-            get => 1f + (_speedBoost.Value * 0.01f);
-        }
 
         public static void Init(ConfigFile config)
         {
             AddConfig(config);
             AddLanguage();
+            JetpackBuff.Init(config);
             JetpackState.Init(config);
             AddSkillDef();
             UpdateSkillFamily();
         }
         public static void AddConfig(ConfigFile config)
         {
-            flightDuration = config.Bind(configPrefix, "Flight Duration", 5f, "The time that the Jump Jets remain active.");
+            flightDuration = config.Bind(configPrefix, "Flight Duration", 2f, "The time that the Jump Jets remain active.");
             skillCooldown = config.Bind(configPrefix, "Cooldown", 15f, "The cooldown before the Jump Jets may be reused.");
-            _speedBoost = config.Bind(configPrefix, "Speed Boost", 20f, "The % bonus to speed while the Jump Jets are active.");
+            _speedBoost = config.Bind(SkillDefs.JetpackSlot.configPrefix, "Speed Boost", 20f, "The % bonus to speed while the Jump Jets are active.");
         }
 
         public static void AddLanguage()
         {
             LanguageAPI.Add("ENGIPLUS_JETPACK_NAME", "JumpJets");
-            LanguageAPI.Add("ENGIPLUS_JETPACK_DESCRIPTION", $"Use your jets and <style=cIsUtility>fly</style> for {flightDuration} seconds, gaining {SpeedBoost}% movement speed.");
+            LanguageAPI.Add("ENGIPLUS_JETPACK_DESCRIPTION", $"Use your jets and <style=cIsUtility>fly</style> for {flightDuration.Value} seconds, gaining {SpeedBoost}% movement speed.");
             LanguageAPI.Add("ENGIPLUS_JETPACK_NAMETOKEN", "Fusion Jump Jets");
             LanguageAPI.Add("ENGIPLUS_KEYWORD_FLYING", "<style=cKeywordName>Flying</style>Move and jump through the air during this effect's duration.");
         }
@@ -58,13 +59,13 @@ namespace ShotgunengiREDUX.SkillDefs
             jetpackSkillDef = UnityEngine.ScriptableObject.CreateInstance<SkillDef>();
 
             jetpackSkillDef.activationState = jetpackState;
-            jetpackSkillDef.activationStateMachineName = "Weapon";
+            jetpackSkillDef.activationStateMachineName = "Body";
             jetpackSkillDef.baseMaxStock = 1;
             jetpackSkillDef.baseRechargeInterval = skillCooldown.Value;
             jetpackSkillDef.beginSkillCooldownOnSkillEnd = true;
             jetpackSkillDef.canceledFromSprinting = false;
             jetpackSkillDef.fullRestockOnAssign = false;
-            jetpackSkillDef.interruptPriority = InterruptPriority.Skill;
+            jetpackSkillDef.interruptPriority = InterruptPriority.PrioritySkill;
             jetpackSkillDef.isCombatSkill = false;
             jetpackSkillDef.mustKeyPress = true;
             jetpackSkillDef.cancelSprintingOnActivation = false;

@@ -14,7 +14,7 @@ using static EngiShotgun.EngineerShotgunPlugin;
 
 namespace EntityStates.Engi.EngiWeapon
 {
-	public class EngiShotgun : BaseState
+	public class GaussShotgunState : BaseState
 	{
 		static readonly string configPrefix = EngiShotgunSlot.configPrefix;
 		public static ConfigEntry<float> minSpread;

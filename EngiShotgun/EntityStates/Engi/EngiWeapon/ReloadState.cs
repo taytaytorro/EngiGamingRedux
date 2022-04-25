@@ -8,7 +8,7 @@ namespace EntityStates.Engi.EngiWeapon
 
 {
     // Token: 0x02000479 RID: 1145
-    public class Reload : BaseState
+    public class ReloadState : BaseState
     {
         static string configPrefix = EngiShotgunSlot.configPrefix;
 
@@ -49,7 +49,7 @@ namespace EntityStates.Engi.EngiWeapon
             }
             if (skillLocator.primary.stock < skillLocator.primary.maxStock)
             {
-                outer.SetNextState(new Reload());
+                outer.SetNextState(new ReloadState());
                 return;
             }
             Util.PlaySound(ChargeGrenades.chargeStockSoundString, gameObject);
