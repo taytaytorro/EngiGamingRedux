@@ -49,6 +49,12 @@ namespace ShotgunengiREDUX.EntityStates.Engi
 			if (isAuthority && characterBody && characterBody.characterMotor)
 			{
 				characterBody.isSprinting = true;
+				modelAnimator.SetBool(AnimationParameters.isGrounded, true);
+				modelAnimator.SetBool(AnimationParameters.isSprinting, true);
+				//int layerIndex = modelAnimator.GetLayerIndex("Sprint");
+				//modelAnimator.CrossFadeInFixedTime("Sprint", 0.1f);
+
+
 				if (stopwatch < flightDuration.Value)
 				{
 					if (boostCooldownTimer <= 0f && characterBody.inputBank.jump.justPressed && characterBody.inputBank.moveVector != Vector3.zero)

@@ -36,6 +36,9 @@ namespace ShotgunengiREDUX.SkillDefs
             Debug.LogWarning($"Buff Icon is {buffIcon}");
             jetpackBuff.iconSprite = buffIcon;
             ContentAddition.AddBuffDef(jetpackBuff);
+
+
+
             GetStatCoefficients += AddJetpackSpeed;
         }
         public static void AddJetpackSpeed(CharacterBody Sender, StatHookEventArgs EventArgs)
