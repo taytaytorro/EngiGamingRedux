@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="EngiShotgun\**" />
+    <Compile Remove="Old\**" />
+    <Compile Remove="Properties\**" />
+    <Compile Remove="SneedUtils\**" />
+    <EmbeddedResource Remove="EngiShotgun\**" />
+    <EmbeddedResource Remove="Old\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <EmbeddedResource Remove="SneedUtils\**" />
+    <None Remove="EngiShotgun\**" />
+    <None Remove="Old\**" />
+    <None Remove="Properties\**" />
+    <None Remove="SneedUtils\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.19" />
+    <PackageReference Include="R2API" Version="4.3.5" />
+    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.3.1-r.0" />
+    <PackageReference Include="UnityEngine" Version="5.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Decalicious">
+      <HintPath>..\..\..\..\..\..\Programs\Steam\steamapps\common\Risk of Rain 2\Risk of Rain 2_Data\Managed\Decalicious.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

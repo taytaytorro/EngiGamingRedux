@@ -1,0 +1,10 @@
+{
+    "name": "EngineerWithAShotgunREDUX",
+    "version_number": "1.0.4",
+    "website_url": "https://github.com/taytaytorro/EngiGamingRedux",
+    "description": "All the fun of the original but now compatible with the SOTV update",
+    "dependencies": [
+        "bbepis-BepInExPack-5.4.1903",
+        "tristanmcpherson-R2API-4.3.5"
+    ]
+}

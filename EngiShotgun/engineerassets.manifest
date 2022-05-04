@@ -1,0 +1,44 @@
+ManifestFileVersion: 0
+CRC: 3200550424
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ccd26683a19391b1dbaec51375fe7446
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 19510b5f9f8f5ba60fd19f30b129835b
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 802132372, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: -1254083943, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+- Class: 114
+  Script: {fileID: -405508275, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+- Class: 114
+  Script: {fileID: -98529514, guid: d3e719b59ab71ba3f6b398058c866280, type: 3}
+- Class: 114
+  Script: {fileID: -146705984, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/EngiShotgunTest/GaussShotgun.png
+- Assets/EngiShotgunTest/StockHexIcon.png
+- Assets/UI Sprites/UI/Crosshair/texCrosshairNibCurved.png
+- Assets/EngiShotgunTest/GaussStock.prefab
+- Assets/UI Sprites/UI/Crosshair/texCrosshairUnavailable.png
+- Assets/EngiShotgunTest/GaussCrosshair.prefab
+- Assets/UI Sprites/UI/Crosshair/texCrosshairDotCropped.png
+- Assets/EngiShotgunTest/PlasmaGrenades.png
+Dependencies: []
