@@ -1,4 +1,7 @@
 # Overview
+---DEPRECIATED---
+If anyone wants to fix it you have my permission to use my code and assets in any way you need.
+
 
 - Adds a more offensive oriented alternative to Engineer's Bouncing Grenades; Gauss Scatter, a powerful automatic gauss shotgun that excels at close range self defense but lacks AoE, mid-long range capabilities, and has falloff.
 - Also adds a more aggressive alternative to Engineer's mines; Plasma Grenades, two powerful, aimable contact grenades that detonate on impact, leaving a large pool of plasma that damages and slows monsters in its AoE! However, you only start out with two, and you give up the capability of setting up powerful traps and fortifying your position more effectively.
